@@ -85,29 +85,29 @@ Las principales razones del por qué usar **vagrant** son:
     <ul>
         <li>**Es declarativo:**<br>
         Una configuración declarativa quiere decir que nosotros le indicamos el objetivo al que queremos llegar, por ejemplo como en el apartado anterior le indicamos a vagrant que queremos lance una máquina virtual con un determinado hardware y configuración. En comparación con una declaración imperativa que viene siendo indicarle paso por paso lo que queremos hacer.
-        <img src="declarative.png" width="50%">
+        <img src="imagenes/declarative.png" width="50%">
         </li>
         <li>**Es portable:**<br>
         Con que es portable se refiere a que podemos compartir dicho fichero de configuración con otras personas, estás personas pueden trabajar en diferentes sistemas operativos o en diferentes versiones del sistema operativo, para **vagrant** esto no es problema ya que vagrant es *cross-platform*, por lo tanto nos quitamos el problema de *"en mi máquina funciona"*.<br>
-        <img src="portabilidad.png">
+        <img src="imagenes/portabilidad.png">
         </li>
     </ul>
 
 <a name="id21"></a>
 ### 2.1. Para desarrolladores
 
-<img src="developers.jpg" width="30%"><br>
+<img src="imagenes/developers.jpg" width="30%"><br>
 
 Si eres un desarrollador o una dessarroladora **vagrant** puede aislar las dependencias y sus respecticas configuraciones en un único ambiente de trabajo desechable por lo tanto no se sacrificará ninguna de las herramientas con las que estas acostumbrado/a a usar, ya sean editores, navegadores, debuggers, etc. 
 
 En caso de ser un grupo de desarroladores, una vez alguno de ellos haya creado un **Vagrantfile**, solo hace falta hacer ```vagrant up``` y todo estará instalado, configurado y listo para trabajar, en caso de que los otros miembros trabajem en otros sistemas operativos no resulta ningún problema ya que al final todos estarán usando el mismo ámbito de **vagrant** y nos quitamos el problema de *"it works on my machine"*.
 
-<img src="work_on_my_machine.jpg" width="20%">
+<img src="imagenes/work_on_my_machine.jpg" width="20%">
 
 <a name="id22"></a>
 ### 2.2. Para administradores
 
-<img src="administrador.jpg" width="32%"><br>
+<img src="imagenes/administrador.jpg" width="32%"><br>
 
 Vagrant te da un ámbito desechable y un workflow consistente para crear escenarios de pruebas en los cuales puedes probar scripts para la gestión de infraestructuras.
 
