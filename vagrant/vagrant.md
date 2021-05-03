@@ -1,6 +1,6 @@
 # Vagrant
 
-## Ínice
+## Índice
 
 1. [¿Qué es Vagrant?](#id1)  
     1.1. [Proveedores](#id11)
@@ -11,15 +11,14 @@
     2.3. [Para diseñadores](#id23)  
     2.4. [Para todo el mundo](#id24)  
 3. [Vagrant vs. otros softwares](#id3)  
-    3.1. [Vagrant vs. CLI Tools](#id31)  
-    3.2. [Vagrant vs. Docker](#id32)  
-    3.3. [Vagrant vs. Terraform](#id33)  
-4. [Vagrant's WorkFlow](#id4)  
-5. [Vagrant boxes](#id5)
-6. [Vagrant]
-7. 
+
+    
 <a name="id1"></a>
 ## 1. ¿Qué es Vagrant?
+
+<img src="imagenes/vagrant_logo.png"><br>
+
+**Vagrant** es una herramienta de línea de comendos que permite generar entornos de desarrollo reproducibles y compatibles de forma muy sencilla, para conseguir estoy **vagrant** configura máquinas virtuales a partir de un ficher de configuración **Vagranfile** basado en el lenguage ***Ruby***
 
 Las funciones de **vagrant** sirve para crear entornos de desarrollos de forma sencilla, también sirve para crear entornos de pruebas.
 
@@ -116,21 +115,16 @@ Por lo tanto puedes hacer pruebas fácil y rápidamente como *shell scripts, che
 <a name="id23"></a>
 ### 2.3. Para diseñadores
 
+<img src="imagenes/web_design.jpeg" width="60%"><br>
+
+Una vez un desarroladaor haya configurado y preparado todo para la aplicación que necesite el diseñador, este no se tendrá que preocupar nunca más de configurar nada y se podrá centrar solo en desarrolar.
+
 <a name="id24"></a>
 ### 2.4. Para todo el mundo
+
+Al final **Vagrant** está diseñado para crear ámbientes de virtualización de la manera más rápida y fácil, por lo tanto es útil para todo el mundo.
 
 <a name="id3"></a>
 ## 3. Vagrant vs. otros softwares
 
-<a name="id31"></a>
-### 3.1. Vagrant vs. CLI Tools
-
-<a name="id32"></a>
-### 3.2. Vagrant vs. Docker
-
-<a name="id33"></a>
-### 3.3. Vagrant vs. Terraform
-
-<a name="id4"></a>  
-## 4. Vagrant's WorkFlow
 http://czerasz.com/2015/01/06/vagrant-workflows/  
