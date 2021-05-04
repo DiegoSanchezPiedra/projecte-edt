@@ -10,8 +10,9 @@
     2.2. [Para administradores](#id22)  
     2.3. [Para diseñadores](#id23)  
     2.4. [Para todo el mundo](#id24)  
-3. [Vagrant vs. otros softwares](#id3)  
-
+3. [Vagrant vs. otros softwares](#id3)
+    3.1. [Vagrant vs. Docker](#id31)
+    3.2. [Vagrant vs. Terraform](#id32)
     
 <a name="id1"></a>
 ## 1. ¿Qué es Vagrant?
@@ -126,5 +127,21 @@ Al final **Vagrant** está diseñado para crear ámbientes de virtualización de
 
 <a name="id3"></a>
 ## 3. Vagrant vs. otros softwares
+
+<a name="id31"></a>
+### 3.1. Vagrant vs. Docker
+
+<img src="imagenes/vagrant-vs-docker.jpg" width="60%"> 
+
+**Docker** depende en el sistena operativo del host, en cambio, **vagrant** incluye el sistema operativo como parte de su paquete, por lo tanto **vagrant** puede contener cualquier sistema operativo y por otra parte los contenedores de **Docker** se ejecutan en sistemas operativos de Linux.
+
+<a name="id32"></a>
+### 3.2. Vagrant vs. Terraform
+
+<img src="imagenes/vagrant-vs-terraform.png" width="70%">
+
+Con **Terraform** describes tu estructura completa como código y tienes la posibilidad de construir los *"resources"* a través de diferentes proveedores, por ejemplo, un servidor de base datos puede estar alojado en **Heroku** y los demás servidores pueden estar en **AWS**, **Terraform** lo que hará es lanzar todos estos servers en los diferentes proveedores en paralelo.
+
+**Vagrant** en cambio es una herramienta que prporciona el *"framework"* y la confiuguración por tal de poder crear y gestionar ámbitos de desarrolo portable, estos ámbitos pueden estar en un host local o en la nube, y también son portables tanto para Windows, Mas OS y Linux.
 
 http://czerasz.com/2015/01/06/vagrant-workflows/  
