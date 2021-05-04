@@ -3,13 +3,11 @@
 ## Índice
 
 1. [¿Qué es Vagrant?](#id1)  
-    
     1.1. [Proveedores](#id11)
 
     1.2. [Vagrant's Workflow](#id12)
 
 2. [¿Por qué Vagrant?](#id2)  
-    
     2.1. [Para desarroladores](#id21)  
 
     2.2. [Para administradores](#id22)  
@@ -19,7 +17,6 @@
     2.4. [Para todo el mundo](#id24)  
 
 3. [Vagrant vs. otros softwares](#id3)
-    
     3.1. [Vagrant vs. Docker](#id31)
     
     3.2. [Vagrant vs. Terraform](#id32)
