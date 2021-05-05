@@ -310,3 +310,6 @@ Un comando muy útil para saber que puertos han sido redireccionados es: ```vagr
 
 <img src="imagenes/parte_3/punto4/vagrant_port.png">
 
+<a name="id35"></a>
+### 3.5. Configuración SSH
+
