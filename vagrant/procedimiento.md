@@ -211,6 +211,8 @@ Al momento de hacer ```vagrant up``` podemos ver que se han realizado los cambio
 
 <img src="imagenes/parte_3/vagrant_simple_conf_2.png">
 
+***En caso de hacer otros cambios más especificos se puede usar el comando ```vagrant reload``` para no tener que hacer un ```vagrant destroy``` y un ```vagrant up``` cada vez que queramos aplicar los cambios que hayamos hecho en el Vagrantfile.***
+
 <a name="id32"></a>
 ### 3.2. Interfaz Gráfica
 Vagrant también nos da la posibilidad de usar una interfaz gráfica que puede ser muy útil en algunos casos, por ejemplo, supongamos que estamos haciendo configuraciones con ssh y hacemos algo mal que no nos deja conectarnos por ssh a la máquina virtual, entonces no tenemos otra forma de conectarnos, aquí es cuando entra la interfaz gráfica que, siempre que tengamos al menos un usuario creado, podemos entrar sin problema.
@@ -270,6 +272,14 @@ Al inspeccionar lo que se crea al arrancar la máquina podemos ver que en lugar 
 <a name="id34"></a>
 ### 3.4. Redirección de puertos
 
+Vagrant por defecto ya hace redireccionamiento: 
+
+* En un pricipio todas la máquinas virtuales están conectadas a una red interna de VirtualBox, a partir de aquí se le asigna a la máquina virtual una dirección ip dentro del segmento de la red privada y se le pone como gateway una dirección ip que VBox conecta al exterior y para que esta máquina virtual pueda acceder al exterior se hace un proceso de **Source NAT**.
+
+* Por otra si queremos conectarnos desde el exterior (teniendo en cuenta también el host anfitrión) a la máquina virtual lo que hace **Vagrant** por defecto es redirigir por el puerto 2222 (en caso que esté en uso se usa otro puerto) de la máquina anfitriona al purto 22 de la máquina virtual.
+
+Pero si nosotros queremos redirigir manualmente un puerto para poder acceder a otro servicio, a apache por ejemplo, ¿Cómo se haría?
+
 Para ello vagrant tiene la opción **vm.network**, que entre cosas, nos permite hacer el port forwarding:
 
 ```
@@ -283,6 +293,7 @@ Vagrant.configure("2") do |config|
   end
 end
 ```
+
 Aquí le indicamos que desde el puerto 8080 del host anfitrión (**host**) se redirigirá al puerto 80 de la máquina virtual (**guest**).
 
 Lo que queda hacer es un ```vagrant up```:
@@ -294,3 +305,8 @@ Aquí podemos como, en los pasos que hace vagrant para preparar la máquina, hac
 Para poder demostrar el funcionamiento he instalado apache2 para ubuntu y he editado el **index.html** para que aparezca "Prueba Redireccionamiento de Puertos":
 
 <img src="imagenes/parte_3/punto4/vagrant_port_forwarding_2.png">
+
+Un comando muy útil para saber que puertos han sido redireccionados es: ```vagrant port```:
+
+<img src="imagenes/parte_3/punto4/vagrant_port.png">
+
