@@ -16,9 +16,9 @@
    3.2. [Interfaz Gráfica](#id3-2)  
    3.3. [Aprovisionamiento Ligero](#id3-3)  
    3.4. [Redirección de puertos](#id3-4)  
-   3.5. [Configuración SSH](#id3-5)
+   3.5. [Configuración SSH](#id3-5)  
    3.6. [Configuración red prvada](#id3-6)  
-   3.7. [Configuración red pública](#id3-7)
+   3.7. [Configuración red pública](#id3-7)  
    3.8. [Multimáquinas](#id3-8)  
 4. [Vagrant con AWS][#id4]  
 
