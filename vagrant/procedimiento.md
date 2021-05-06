@@ -16,11 +16,10 @@
    3.2. [Interfaz Gráfica](#id3-2)  
    3.3. [Aprovisionamiento Ligero](#id3-3)  
    3.4. [Redirección de puertos](#id3-4)  
-   3.5. [Configuración SSH](#id3-5)  
-   3.6. [Configuración red prvada](#id3-6)  
-   3.7. [Configuración red pública](#id3-7)  
-   3.8. [Multimáquinas](#id3-8)  
-4. [Vagrant con AWS][#id4]  
+   3.5. [Configuración red prvada](#id3-5)  
+   3.6. [Configuración red pública](#id3-6)  
+   3.7. [Multimáquinas](#id3-7)  
+4. [Ejercicio Final](#id4)
 
 <a name="id1"></a>
 ## 1. Instalación
@@ -311,5 +310,90 @@ Un comando muy útil para saber que puertos han sido redireccionados es: ```vagr
 <img src="imagenes/parte_3/punto4/vagrant_port.png">
 
 <a name="id35"></a>
-### 3.5. Configuración SSH
+### 3.5. Configuración red privada
 
+En este apartado vamos a añadir una red privada, a parte de la red que **Vagrant** utiliza por defecto para todas la máquinas, la cual va a estar conectada a la red privada donde se encuentra la máquina anfitriona y por lo tanto también podrán tener conexión la máquina anfitriona con la máquina virtual.
+
+Para poder añadir esta nueva ip tenemos que hacer uso de la opción ```vm.network``` que proporciona **Vagrant**:
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "private_network", ip: "192.168.100.50"
+end
+```
+Como podemos en este caso he añadido la ip "192.168.100.50".
+
+<img src="imagenes/parte_3/punto5/vagrant_private_net.png">
+
+Aquí podemos comprovar como **Vagrant**, a parte de la red por defecte que permite acceder al exterio, añade otra red que solo sirve par el entorno privado.
+
+<img src="imagenes/parte_3/punto5/vagrant_private_net_2.png">
+
+Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos comprovar que ahora tiene 3 interfaces: de la loopback, la que permite acceder al exterior por medio de NAT y la que está en el entorno privado.
+
+<a name="id36"></a>
+### 3.6. Configuiración red pública
+
+La configuración de una red pública es bastante parecida a la privado, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo *"puente"* por media de la interficie de la máquina anfitriona que tiene acceso a internet, por lo tanto ya es el router el que se encarga de hacer el proceso de NAT y otorgarle una dirección ip a la máquina virtual.
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "public_network", bridge: "enp0s31f6"
+  config.vm.provider "virtualbox" do |vb|
+  end
+end
+```
+
+<img src="imagenes/parte_3/punto6/vagrant_public_net.png">
+
+Podemos que ahora se ha añadido otra interfici, pero está vez en modo *"puente"*.
+
+<img src="imagenes/parte_3/punto6/vagrant_public_net_2.png">
+
+También podemos ver en esta imagen que tenemos una ip que nos ha proporcionado el servidor DHCP del router.
+
+<a name="id37"></a>
+### 3.7. Multimáquinas
+
+El uso de multimáquinas puede ser muy útil para algunos casos, por ejemplo para hacer una simulación de un entorno de producción que contiene múltiple máquinas.
+
+Para poder lanzar multimáquinas en el fichero de configuración de **Vagrantfile** tenemos que usar la opción que nos proporciona **Vagrant** ```vm.define``` que sirve para indicar la máquinas que qeremos levantar.
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.define "web" do |maquina_1|
+    maquina_1.vm.box = "ubuntu/xenial64"
+    maquina_1.vm.hostname = "web-server"
+    maquina_1.vm.network "public_network", bridge: "eth0"
+    maquina_1.vm.network "private_network", ip: "10.200.100.101"
+  end
+  config.vm.define "db" do |maquina_2|
+    maquina_2.vm.box = "ubuntu/xenial"
+    maquina_2.vm.hostname = "db-server"
+    maquina_2.vm.network "private_network", ip: "10.200.100.102"
+  end
+end
+```
+
+Hemos hecho la simulación de que tenemos dos servidores, uno es el servidor web que tiene acceso a internet y también tiene una ip en la red privada "10.200.100.101" y el otro es un servidoe de base de datos que no tiene acceso a internet y tiene la ip en la red privada "10.200.100.102" para que sea posible la conexión entres estos dos servidores.
+
+<img src="imagenes/parte_3/punto7/vagrant_define.png">
+
+<img src="imagenes/parte_3/punto7/vagrant_define_2.png">
+
+<a name="id4"></a>
+## 4. Ejercicio Final
+
+Para este ejercico final vamos a levantar una máquina con las siguientes caraterísticas:
+
+* Usará un box de [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64/versions/20210429.0.0)
+* Usará como proveedor **VirtualBox**
+  * Tendrá 2GB de memoria asignados
+  * Tendrá 2 cores virtuales asignados
+* Tendrá, a parte de la ip por defecte, una ip en la red privada "192.68.33.0/24"
+* A parte de directorio compartido **/vagrant**, tendrá otro en **/var/www/html** con los permisos 777 para directorios y 666 para ficheros
+* Usará un recurso de provisión para ejecutar comandos de shell, los cuales son transferidos por un fichero **.sh**
+
+Está entorno está preparados para hacer pruebas en apache2, que a su vez cuenta con módules de php, y también para hacer test en ldap.

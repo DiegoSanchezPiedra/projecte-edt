@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "web" do |maquina_1|
+    maquina_1.vm.box = "ubuntu/xenial64"
+    maquina_1.vm.hostname = "web-server"
+    maquina_1.vm.network "public_network", bridge: "enp0s31f6"
+    maquina_1.vm.network "private_network", ip: "10.200.100.101"
+  end
+  config.vm.define "db" do |maquina_2|
+    maquina_2.vm.box = "ubuntu/xenial64"
+    maquina_2.vm.hostname = "db-server"
+    maquina_2.vm.network "private_network", ip: "10.200.100.102"
+  end
+  config.vm.provider "virtualbox" do |vm|
+  end
+end
