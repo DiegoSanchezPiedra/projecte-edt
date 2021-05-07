@@ -7,7 +7,7 @@
   <title>Web</title>
 </head>
 <body>
-  <h1>base de datos</h1>
+  <h1 align="center">Hello World!</h1>
   <?php phpinfo(); ?>
 </body>
 </html>
