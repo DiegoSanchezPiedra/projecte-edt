@@ -212,7 +212,7 @@ Al momento de hacer ```vagrant up``` podemos ver que se han realizado los cambio
 
 ***En caso de hacer otros cambios más especificos se puede usar el comando ```vagrant reload``` para no tener que hacer un ```vagrant destroy``` y un ```vagrant up``` cada vez que queramos aplicar los cambios que hayamos hecho en el Vagrantfile.***
 
-<a name="id32"></a>
+<a name="id3-2"></a>
 ### 3.2. Interfaz Gráfica
 Vagrant también nos da la posibilidad de usar una interfaz gráfica que puede ser muy útil en algunos casos, por ejemplo, supongamos que estamos haciendo configuraciones con ssh y hacemos algo mal que no nos deja conectarnos por ssh a la máquina virtual, entonces no tenemos otra forma de conectarnos, aquí es cuando entra la interfaz gráfica que, siempre que tengamos al menos un usuario creado, podemos entrar sin problema.
 
@@ -237,7 +237,7 @@ y al hacer un ```vagrant up``` nos abre la interfaz gráfica:
 
 ***Esto funcionará siempre y cuando el proveedor que se esté utilizando soporte la interfaz gráfica***
 
-<a name="id33"></a>
+<a name="id3-3"></a>
 ### 3.3. Aprovisionamiento Ligero
 
 Imaginemos que tenemos 10 máquinas lanzadas y las dos usan la misma imagen, lo que pasará es que por cada máquina creada habrá una imagen ocupando espacio en disco real del host anfitrión.
@@ -268,7 +268,7 @@ Al inspeccionar lo que se crea al arrancar la máquina podemos ver que en lugar 
 
 <img src="imagenes/parte_3/punto3/vagrant_tp_2.png">
 
-<a name="id34"></a>
+<a name="id3-4"></a>
 ### 3.4. Redirección de puertos
 
 Vagrant por defecto ya hace redireccionamiento: 
@@ -309,7 +309,7 @@ Un comando muy útil para saber que puertos han sido redireccionados es: ```vagr
 
 <img src="imagenes/parte_3/punto4/vagrant_port.png">
 
-<a name="id35"></a>
+<a name="id3-5"></a>
 ### 3.5. Configuración red privada
 
 En este apartado vamos a añadir una red privada, a parte de la red que **Vagrant** utiliza por defecto para todas la máquinas, la cual va a estar conectada a la red privada donde se encuentra la máquina anfitriona y por lo tanto también podrán tener conexión la máquina anfitriona con la máquina virtual.
@@ -332,7 +332,7 @@ Aquí podemos comprovar como **Vagrant**, a parte de la red por defecte que perm
 
 Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos comprovar que ahora tiene 3 interfaces: de la loopback, la que permite acceder al exterior por medio de NAT y la que está en el entorno privado.
 
-<a name="id36"></a>
+<a name="id3-6"></a>
 ### 3.6. Configuiración red pública
 
 La configuración de una red pública es bastante parecida a la privado, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo *"puente"* por media de la interficie de la máquina anfitriona que tiene acceso a internet, por lo tanto ya es el router el que se encarga de hacer el proceso de NAT y otorgarle una dirección ip a la máquina virtual.
@@ -354,7 +354,7 @@ Podemos que ahora se ha añadido otra interfici, pero está vez en modo *"puente
 
 También podemos ver en esta imagen que tenemos una ip que nos ha proporcionado el servidor DHCP del router.
 
-<a name="id37"></a>
+<a name="id3-7"></a>
 ### 3.7. Multimáquinas
 
 El uso de multimáquinas puede ser muy útil para algunos casos, por ejemplo para hacer una simulación de un entorno de producción que contiene múltiple máquinas.
