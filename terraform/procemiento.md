@@ -329,4 +329,16 @@ resource "aws_instance" "servidor-web" {
 }
 ```
 
-Le indicamos que queremos usar el *"render"* del script ya que este sustituye las varibles por su valor en si, en este caso "apache2" por $(webserver)
+Le indicamos que queremos usar el *"render"* del script ya que este sustituye las varibles por su valor en si, en este caso "apache2" por $(webserver), esto se puede ver en el fichero **terraform.tfstate**:
+
+<img src="imagenes/parte_3/punto5/terraform_template_state.png">  
+
+Una vez hecha la configuración, hacemos un ```terraform plan``` y podremos ver que este cambio requiere hacer un destroy y un add de la instancia.
+
+<img src="imagenes/parte_3/punto5/terraform_template_1.png">
+
+Ahora queda hacer un ```terraform apply --auto-approval``` para poder aplicar los cambios.
+
+<img src="imagenes/parte_3/punto5/terraform_template_aws.png">
+
+Podemos ver que en **AWS** se ha aplicado el script en user_data.
