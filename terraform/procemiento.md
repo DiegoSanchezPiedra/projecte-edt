@@ -288,3 +288,45 @@ Ahora queda hacer un ```terraform apply``` y ver el resultado del output:
 <img src="imagenes/parte_3/punto4/terraform_output_1.png">
 
 <img src="imagenes/parte_3/punto4/terraform_output_2.png">
+
+<a name="id3-5"></a>
+### 3.5. Templates
+
+El recurso **templates** es muy útil ya que, entre otras utilidades, nos permite hacer scripts con variables que se les puede pasar para luego ejecutarlo como **user_data**, **user-data** viene a ser la utilidad que tiene **AWS** para ejecutar scripts. 
+
+Esta utilidad junto con este recurso vienen muy bien al momento de hacer el despliegue de servicios.
+
+Para declarar el recurso **templates** tenemos que poner lo siguiente:
+
+```
+data "template_file" "install" {
+  template = "${file("templates/install.tpl")}"
+  vars = {
+    webserver = "apache2"
+  }
+}
+```
+En verdad este recurso pertene a otro proveedor, por lo tanto tenemos que ejecutar ```terraform init``` para que pueda instalar los plugins necesarios para el funcionamiento de este recurso.
+
+***El nombre del recurso será install y usará un fichero install.tpl que a su vez se encuentra en el directorio templates.***
+
+**install.tpl**
+```
+#!/bin/bash
+apt-get -y install $(webserver)
+service $(webserver) start
+```
+
+El fichero "install.tpl" consiste en un script que hace la instalación de apache2 en una instancia con ami de Ubutu.
+
+Pero para que esto se pueda aplicar a la instancia que estamos desplegando, tenemos hacer uso de la utilidad **user_data** que proporcia el recurso de instancias de **AWS**:
+
+```
+resource "aws_instance" "servidor-web" {
+  ami = "${var.ami-id}"
+  instance_type = "${var.instance-type}"
+  user_data = "${data.template_file.install.rendered}"
+}
+```
+
+Le indicamos que queremos usar el *"render"* del script ya que este sustituye las varibles por su valor en si, en este caso "apache2" por $(webserver)
