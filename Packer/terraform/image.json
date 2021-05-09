@@ -1,0 +1,28 @@
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "profile": "{{ user `aws_profile` }}",
+            "region": "eu-west-3",
+            "ami_name": "diego_ami",
+            "source_ami": "ami-0f7cd40eac2214b37",
+            "instance_type": "t2.micro",
+            "ssh_username": "ubuntu"
+        }
+    ],
+    "provisionaer": [
+        {
+            "type": "shell",
+            "script": "intall.sh"
+        },
+        {
+            "type": "file",
+            "source": "index.php",
+            "destination": "/tmp/"
+        },
+        {
+            "type": "shell",
+            "inline": ["sudo cp /tmp/index.php /var/www/html/"]
+        }
+    ]
+}
