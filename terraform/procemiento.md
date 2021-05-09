@@ -10,11 +10,12 @@
    3.3. [Varibales](#id3-3)  
    3.4. [Outputs y Recurso Instancias](#id3-4)  
    3.5. [Templates](#id3-5)  
-4. [Configuración Compleja](#id4)  
-   4.1. [Múltiples Recursos](#id4-1)  
-   4.2. [Reutilizar Plantilla](#id4-2)  
-   4.3. [Relacionar Recursos](#id4-3)  
-5. [Ejercicio Final](#id5)  
+   3.6. [Múltiples Recursos](#id3-6)  
+   3.7. [Interpolación](#id3-7)  
+   3.8. [Elastic Load Balance](#id3-8)  
+   3.9. [Security Groups](#id3-9)  
+   3.10. [Relational Data Base](#id3-10)  
+4. [Ejercicio Final](#id4)  
 
 <a name="id1"></a>
 ### 1. Instalación  
@@ -342,3 +343,305 @@ Ahora queda hacer un ```terraform apply --auto-approval``` para poder aplicar lo
 <img src="imagenes/parte_3/punto5/terraform_template_aws.png">
 
 Podemos ver que en **AWS** se ha aplicado el script en user_data.
+
+<a name="id3-6"></a>
+### 3.6. Múltiples recursos
+
+**Terraform** tiene dos opciones muy útil para lanzar varios recursos a la vez si tener que poner la misma estructura repetitivamente, esta opciones son:
+
+* **count:**
+
+```
+resource "aws_instance" "webservers" {
+  ami = "ami-0f7cd40eac2214b37"
+  instance_type = "t2.micro"
+  count = 2
+  tags {
+    Name = "webservers"
+  }
+}
+```
+
+Como en el valor de **count** le hemos puesto 2, **Terraform** nos creará 2 instancias ec2, webservers[0] y webserver[1].
+
+Ahora si hacemos un ```terraform apply``` podremos comprobar que las dos instancias se han creado correctamente:
+
+<img src="imagenes/parte_3/punto6/terraform_count_1.png">
+
+Y si vamos a la página web de **AWS** podremos ver en el ***dashboard*** que las dos instancias están creadas.
+
+<img src="imagenes/parte_3/punto6/terraform_count_2.png">
+
+* **autoscaling:**
+  Este método es un poco mas complidao pero a cambio nos da mucha más flexibilidad de opciones al momento de crear las instancias:
+
+```
+resource "aws_launch_configuration" "web-server" {
+name_prefix = "web-server-"
+image_id = "ami-0f7cd40eac2214b37"
+instance_type = "t2.micro"
+key_name = "terraform-key"
+security_groups = ["${aws_security_group.web-sg.id}"]
+user_data = "${file("templates/install.tpl")}"
+lifecycle {
+  create_before_destroy = true
+}
+}
+resource "aws_autoscaling_group" "as-web" {
+  name = "${aws_launch_configuration.web-server.name}"
+  launch_configuration = "${aws_launch_configuration.web-server.name}"
+  max_size = 1
+  min_size = 1
+  load_balancers = ["${aws_elb.elb-web.id}"]
+  vpc_zone_identifier = ["${aws_subnet.publica.id}"]
+  wait_for_elb_capacity = 1
+  tag {
+    key = "Name"
+    propagate_at_launch = true
+    value = "web-server"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+```
+
+Como podemos ver primero creamos el recurso de ***aws_launch_configuration*** que es donde vamos a especificar todas las caracteristicas que van a tener las instancias que vamos a crear posteriormente con el **autoscaling** (esto es opcional pero es de buena práctica ya que así lo tenemos mas ordenado y su vez inteligible).
+
+Una vez creado y configurado el recurso **aws_launch_configuration** pasamos a crear y configurar el recurso que, de hecho, desplegará las instancias, este recurso es **aws_autoscaling_group**:
+
+* **name:**
+  En este elemento pondremos el nombre que tendrá el recurso **austoscaling** en **AWS**
+* **launch_configuration:**
+  Aquí le especificamos que cual es el **launch configuration** con las características de las instancias que lanzaremos.
+* **max_size:**
+  Aqui le decimos el máximo de instancias que queremos lanzar
+* **min_size:**
+  Aquí le decimos el mínimo de instancias que queremos lanzar
+***Estas dos últimas opciones son obligatorias ya que así el **autoscaling** sabe cuantas instancias tiene que lanzar***
+* **tag:**
+  * **key:**
+  Aquí le indicamos que tipo de tag le pondremos, en este caso en nombre.
+  * **propagate_at_lunch:**
+  Esta opción es para indicarle que este nombre se aplique a todas las intancias desplegadas,
+  * **value:**
+  Y en esta ocpción ponemos del valor del nombre que queremos que todas instancias tengas al momento de ser lanzadas.
+* **lifecycle:**
+  * **create_before_destroy:**
+  Esta opción es para indicarle que, en caso de que haya otro recurso **autoscaling**, primero cree el nuevo y despues destruya el anterior.
+
+Hacemos ```terraform apply``` y comprobamos que los recursos e instancia se han creado correctamente:
+
+<img src="imagenes/parte_3/punto6/terraform_autoscaling_1.png" alt="instancia">
+
+<img src="imagenes/parte_3/punto6/terraform_autoscaling_2.png" alt="launch_configuration">
+
+<img src="imagenes/parte_3/punto6/terraform_autoscaling_3.png" alt="autoscaling">
+
+<a name="id3-7"></a>
+### 3.7. Interpolación:
+
+Este tipo de interpolación es muy útil ya que dependiendo de la región donde nos enctremos cambiaran los IDs de las amis de **AWS**, por lo tanto creamos esta utilidad para que sea mucho más fácil usar la ami correcta dependiendo de la región donde nos encontramos.
+
+Para usar este método necesitamos crear una variable de tipo map se rige por **key = value**, es decir que dependiendo de la region se le asiganará una ami diferenete:
+
+```
+variable "aws_amis" {
+  type = map
+  default = {
+    "us-east-1" = "ami-09e67e426f25ce0d7" #Virginia
+    "us-east-2" = "ami-00399ec92321828f5" #Ohio
+    "us-west-1" = "ami-0d382e80be7ffdae5" #California
+    "us-west-2" = "ami-03d5c68bab01f3496" #Oregon
+    "ap-northeast-3" = "ami-0001d1dd884af8872" #Osaka
+    "ap-northeast-2" = "ami-04876f29fd3a5e8ba" #Seoul
+    "ap-southeast-1" = "ami-0d058fe428540cd89" #Singapore
+    "ap-southeast-2" = "ami-0567f647e75c7bc05" #Sydney
+    "ap-northeast-1" = "ami-0df99b3a8349462c6" #Tokyo
+    "ca-central-1" = "ami-0801628222e2e96d6" #Central
+    "eu-central-1" = "ami-05f7491af5eef733a" #Frakfurt
+    "eu-west-1" = "ami-0a8e758f5e873d1c1" #Ireland
+    "eu-west-2" = "ami-0194c3e07668a7e36" #London
+    "eu-west-3" = "ami-0f7cd40eac2214b37" #Paris
+    "eu-north-1" = "ami-0ff338189efb7ed37" #Stockholm
+    "sa-east-1" = "ami-054a31f1b3bf90920" #São Paulo
+  }
+}
+```
+***Las amis de una maquina ubuntu***
+
+Por lo tanto, una vez tenemos esta variable creada, poder hacer uso de esta:
+
+Por ejemplo al momento de especifcar que ami usar en el **launch_configuration** del punto anterior:
+
+```
+resource "aws_launch_configuration" "web-server" {
+  name_prefix = "web-server-"
+  image_id = "${lookup(var.aws_amis, var.region)}"
+  instance_type = "${var.instance_type}"
+  key_name = "terraform-key"
+  security_groups = ["${aws_security_group.web-sg.id}"]
+  user_data = "${file("templates/install.tpl")}"
+  lifecycle {
+    create_before_destroy = true
+}
+```
+
+Hacemos uso de la función **lookup** que lo que hace es recibir la lista de amis que hemos creado anteriormente y la región donde estamos usando **AWS**.
+
+***En este caso la región está guardad en una variable llamada "region":***
+
+```
+variable "region" {
+  type = string
+  default = "eu-west-3"
+}
+```
+
+<a name="id3-8"></a>
+### 3.8. Elastic Load Balancer:
+Primero que nada, ¿qué es un Elastic Load Balancer(eln)?
+
+Un Load Balancer acepta tráfico de entrada de peticiones provinientes de clientes o routers hacia unos "targets" registrados en **AWS**, una instancia EC2 por ejemplo, y una vez que el "target" está funcionando correctamente y puede recibir peticiones, redirige esta petición a dicho "target".
+
+Tambíen nos proporciona un **domain name** por tal de poder acceder poniendo este en vez de la ip pública del servicio, en caso de que sea un servidor web por ejemplo.
+
+La declaración de este recurso es la siguiente:
+
+```resource "aws_elb" "elb-web" {
+  name = "edt-web"
+  cross_zone_load_balancing = true
+  subnets = ["${aws_subnet.publica.id}"]
+
+  listener {
+    instance_port = 80
+    instance_protocol = "http"
+    lb_port = 80
+    lb_protocol = "http"
+  }
+  security_groups = ["${aws_security_group.elb-sg.id}"]
+}
+```
+* **name:**
+  En esta opción le especificamos el nombre que tendrá el elb en **AWS**.
+* **cross_zone_load_balancing:**
+  Esta opción es para especificarle que actue en más de una *"availability zone"*.
+* **subnets:**
+  Para indicarle en que sub redes actue el balanceador, esta opción es obligatoria si se está unsando una VPC para poner todos los recursos.
+* **listener:**
+  Tiene que poder *"escuchar*" por al menos un puerto, en este caso el pueto 80.
+
+<img src="imagenes/parte_3/punto8/terraform_elb_1.png">
+
+<img src="imagenes/parte_3/punto8/terraform_elb_2.png">
+
+<a name="id3-9"></a>
+### 3.9. Security Groups
+Este recurso sirver para añadir un security group en **AWS**, un security group es un grupo de reglas de entrada y salida en la cuales se especifica que puerto o rango de puertos quedan abierto para determinadas ips.
+
+La declaración de este recurso es la siguiente:
+
+```
+resource "aws_security_group" "elb-sg" {
+  name = "elb-sg"
+  vpc_id = "${aws_vpc.vpc.id}"
+  ingress {
+    from_port = 80
+    protocol = "tcp"
+    to_port = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    protocol = "-1"
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+
+En este ejemplo le estamos especificando un security group al balanceador del apartado anterior.
+
+Estamos permitiendo el tráfico de entrada al puerto 80 (from_port y to_port) del protocolo "tcp" (protocol) desde cualquier origen (cidr_blocks).
+
+<img src="imagenes/parte_3/punto9/terraform_sg_1.png" alt="detalles">
+
+**Reglas de entrada:**
+
+<img src="imagenes/parte_3/punto9/terraform_sg_ingress.png" alt="reglas_input">
+
+**Reglas de salida:**
+
+<img src="imagenes/parte_3/punto9/terraform_sg_egress.png" alt="reglas_output">
+
+<a name="id3-10"></a>
+### 3.10. Relational Data Base:
+
+Este recurso crea una instancia de base datos dentro de **AWS** que es llamda **RDB**.
+
+La **RDB** es un tipo de instancia que porporciona un entorno aislado en la nube de **AWS**, este tipo de instancia también necesita tener al menos 2 subnet por si en caso falla una, empieza a actuar otra que se encuentre en otra subnet.
+
+La declaración de este recurso es de la siguiente forma:
+
+```
+resource "aws_db_subnet_group" "subn-groups" {
+  subnet_ids = ["${aws_subnet.privada1.id}","${aws_subnet.privada2.id}"]
+}
+
+resource "aws_db_instance" "mydb" {
+  instance_class = "db.t2.micro"
+  identifier = "mydb"
+  username = "${var.rds_username}"
+  password = "${var.rds_passwd}"
+  engine = "postgres"
+  allocated_storage = 10
+  storage_type = "gp2"
+  multi_az = false
+  db_subnet_group_name = "${aws_db_subnet_group.subn-groups.name}"
+  vpc_security_group_ids = ["${aws_security_group.rds-sg.id}"]
+  publicly_accessible = true
+  skip_final_snapshot = true
+}
+```
+
+Como se ha comentado antes, tenemos que crear un grupo de subnets para los RDBs. 
+
+El nombre del recurso que proporciona el RDB es ```aws_db_instance``` en **Terraform**.
+
+* **instance class:**
+  Es donde especificamos el tipo de instancia que tendrá la RDB.
+* **identifier:**
+  El nombre que tendrá la RDB.
+* **username:**
+  El user con el que se creará la RDB.
+* **password:**
+  El password que tendrá el user.
+* **engine:**
+  Que engine de base de datos relacional va a tener la RDB, en este caso **postgresql**.
+* **allocated_storage:**
+  El espacio de disco que tendrá la RDB.
+* **storage_type**
+  El tipo de dispositivo de almacenaje que tendrá el disco.
+* **multi_az:**
+  Es para indicarle si la RDB estará esparcida por diferentes availability zones.
+* **db_subnet_group:**
+  El grupo de subntes en las que estarán cada una de las RDBs.
+* **vpc_security_group_ids:**
+  El security group que tendrá la RDB, para poder controlar las reglas de entrada y salida que tendrá la RDB.
+* **publicy_accessible:**
+  Esta opción es para indicar que esta RDB dipondrá de acceso público
+* **skip_final_snapshot:**
+  Esta opción es para que al momento de elimarse esta RDB se cree una snapshot.
+
+<img src="imagenes/parte_3/punto10/terraform_rdb.png">
+
+<a name="id4"></a>
+## 4. Ejercicio final:
+
+Para este ejercicio final tendremos: 
+
+* Una instancia tipo EC2 en la cual habŕa estará instalado un servidor web con el servicio de apache y php, tambíen contará con security group que hará que hará referencia al security group de de un balanceador
+
+* Habrá una instancia de RDB que tambíen contará con su security group permitiendo el tráfico del puerto 5432. 
+
+* Y, por último, todos estos recursos y servicios estarán dentro de una **VPC**
