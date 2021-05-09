@@ -130,3 +130,5 @@ sudo systemctl start apache2.service
     "post-processor": ["vagrant"]
 }
 ```
+
+https://mohsensy.github.io/sysadmin/2018/07/24/vagrant-packer-tutorial.html 
