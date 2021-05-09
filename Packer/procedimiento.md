@@ -132,3 +132,6 @@ sudo systemctl start apache2.service
 ```
 
 https://mohsensy.github.io/sysadmin/2018/07/24/vagrant-packer-tutorial.html 
+
+Ubuntu-18.04/packer_cache/
+Ubuntu-18.04/output/*.box
