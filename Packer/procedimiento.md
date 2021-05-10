@@ -6,7 +6,7 @@
 2. [Vagrant Box](#id2)  
    
 <a name="id1"></a>
-##1. AWS ami
+## 1. AWS ami
 
 Estal ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shel"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
 
