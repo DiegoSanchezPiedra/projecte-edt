@@ -24,7 +24,7 @@
 <a name="id1"></a>
 ## 1. Instalación
 
-Como se ha comentado anteriormente, para usar **Vagrant** se necesita tener, al menos, un sistema de virtualización, en estos ejercicios se utilizará el sistema de vitualización inicial con el cual se desarrolló **Vagrant** que es **VirtualBox** y que además es donde se ofrece más funcionalidad.
+Como se ha comentado anteriormente, para usar **Vagrant** se necesita tener, al menos, un sistema de virtualización, en estos ejercicios se utilizará el sistema de vitualización inicial con el cual se desarrolló **Vagrant** que es [VirtualBox](https://www.virtualbox.org/) y que además es donde se ofrece más funcionalidad.
 
 <a name="id1-1"></a>
 ### 1.1. Vagrant
@@ -67,14 +67,14 @@ $ sudo /usr/lib/virtualbox/vboxdrv.sh setup
 <a name="id2"></a>
 ## 2. Boxes
 
-El funcionamiento de **Vagrant** consiste en dividir la distribución de la aplicación en dos, el sistema operativo en un determinado formato y por otra lado distribuimos la configuración y modificaciones de este escenario en un fichero de texto plano, que viene a ser **Vagrantfile**, bueno pues la distribución de este sistema operativo, que es, entre otras cosas, la imagen del sistema operativo que queremos usar. 
+El funcionamiento de **Vagrant** consiste en dividir la distribución de la aplicación en dos, el sistema operativo en un determinado formato, que viene a ser, entre otras cosas, la imagen de este, y por otra lado distribuimos la configuración y modificaciones de este escenario en un fichero de texto plano, que viene a ser **Vagrantfile**.
 
-Vagrant tiene su [comunidad](https://app.vagrantup.com/boxes/search) en la cual todo el mundo puede subir sus boxes y ahí es donde se pueden obtener las boxes o también podemos crear nuestra propia box con ayuda de otro software, por ejemplo **packer**.
+Vagrant tiene su propia [comunidad](https://app.vagrantup.com/boxes/search) en la cual todo el mundo puede subir sus boxes y ahí es donde se pueden obtener los boxes o también podemos crear nuestro propio box con ayuda de otro software, por ejemplo **packer**.
 
 <a name="id2-1"></a>
 ### 2.1. Añadir un box
 
-Para añadir un box vagrant nos proporciona el subcomando ***"box"*** que a su vez tiene más subcomandos y entre ellos encotramos el subcomando ***"add"*** que es los que nos permite descargar el box que queramos:
+Para añadir un box, **Vagrant** nos proporciona el subcomando ***"box"*** que a su vez tiene más subcomandos y entre ellos encotramos ***"add"*** que es los que nos permite descargar el box que queramos:
 
 ```
 $ vagrant box add [nombre del box] [opciones]
@@ -87,23 +87,25 @@ Ejemplo:
 <img src="imagenes/parte_2/box_add.png"></a>  
 
 
-***Hay que tener en cuenta que las imagenes que se suben a la comunidad de Vagrant no están verificados, por lo tanto es necesario que tengamos cuidado al momento de qué box descargar***
+***Hay que tener en cuenta que los boxes que se suben a la comunidad de Vagrant no están verificados, por lo tanto es necesario que tengamos cuidado al momento de qué box descargar***
 
 <a name="id2-2"></a>  
 ### 2.2. Lanzar un box
 
-Para el arranque de un box que hayamos descargado anteriormente tenemos que usar el subcomando ***"init"*** dentro del subcomando de ***"box"***, esto lo que hará es crear un fichero **Vagrantfile** en el cual se encuentra la configuración base para poder hacer posteriormente ```vagrant up```, por lo tanto, tenemos que tener en cuenta que el uso de este fichero de configuración por tal de poder arrancar el box tiene que esta alojado en un directorio y en este directorio no pueden ir otros ficheros de configuración, en conclusión, por cado vox que queramos arrancar necesitaremos un directorio diferente, esto nos permite poder tener una mejor organización de los boxes que tengamos activos.
+Para el arranque de un box que hayamos descargado anteriormente tenemos que usar el subcomando ***"init"*** dentro del subcomando de ***"box"***, esto lo que hará es crear un fichero **Vagrantfile** en el cual se encuentra la configuración base para poder, posteriormentem, arrancar nuestro box con ```vagrant up```, por lo tanto, tenemos que tener en cuenta que el uso de este fichero de configuración que nos permite arrancar el box tiene que estar alojado en un directorio y en este directorio no pueden ir otros ficheros de configuración **Vagrantfile**.
+
+En conclusión, por cada box que queramos arrancar necesitaremos un directorio diferente, esto nos permite poder tener una mejor organización de los boxes que tengamos activos.
 
 <img src="imagenes/parte_2/vagrant_init.png">  
 
-Como podemos en la imagen, hemos hecho un ```vagrant init``` de un box llamado "ubuntu/trusty64" y automáticamente nos ha creado un fichero **Vagrantfile** en el cual especifica que al momento de hacer ```vagrant up``` se usará como box el box que hemos especificado.
+Como podemos ver en la imagen, hemos hecho un ```vagrant init``` de un box llamado "ubuntu/trusty64" y automáticamente nos ha creado un fichero **Vagrantfile** en el cual especifica que al momento de hacer ```vagrant up``` se usará como *box* el box que hemos especificado.
 
 <img src="imagenes/parte_2/vagrant_up.png">  
 
-Al hacer el ```vagrant up``` podemos ver que se han hecho es importar el box que hemos espcificado, es decir hace una copia y sobre esta copia hacer una series de adaptaciones para que podamos utlilizar y acceder a la máquina, las adaptaciones que hace son:
+Al hacer el ```vagrant up``` podemos ver que lo que **Vagrant** hace es importar el box que hemos espcificado, es decir hace una copia y sobre esta copia hace una serie de adaptaciones para que podamos utlilizar y acceder a la máquina, las adaptaciones que hace son:
 
-* Conectarla en una red interna de virtual box que tiene acceso a internet mediante **NAT**
-* Abrir el puerto 2222 (en caso de que esté en uso, usa otro puerto) de la máquina anfitriona por tal de poder hacer un redirección al puerto 22 de la máquina virtual y que nosotros podamos conectarnos por ssh.
+* Conectarla en una red interna que proporciona VirtualBox y que tiene acceso a internet mediante **NAT**
+* Abrir el puerto 2222 (en caso de que esté en uso, usa otro puerto) de la máquina anfitriona por tal de poder hacer un redirección al puerto 22 de la máquina virtual y que nosotros nos podamos conectarnos por ssh.
 * Hace una serie de comprobaciones
 * Monta un directorio compartido
     
@@ -111,7 +113,7 @@ Todos estos pasos se hacen automáticamente.
 
 <img src="imagenes/parte_2/vagrant_ssh.png">  
 
-Y, como podemos ver, al hacer un simple ```vagrant ssh``` nos conectamos a la máquina lanzada y esta, por medio de NAT, puede accede al exterior y la máquina anfitriona puede contactarse con ella mediante comandos de vagrant sin ningún problema, esto lo que resuelve es tener que que levantar una máquina, instalar el sistema operativo, configurarlo, etc.
+Y, como podemos ver, al hacer un simple ```vagrant ssh``` nos conectamos a la máquina lanzada y esta, por medio de NAT, puede accede al exterior y la máquina anfitriona puede contactarse con ella mediante comandos de vagrant sin ningún problema, esto lo que resuelve es tener que hacer el tedioso proceso de levantar una máquina, instalar el sistema operativo, configurarlo, etc.
 
 Una vez tengamos la máquina encendida podemos hacer un ```vagrant status``` para poder ver el estado de esta, este comando también nos proporciona información sobre qué comandos podemos utilizar para parar, suspender o reinicar la máquina.
 
@@ -124,7 +126,7 @@ En caso de que ya no necesitemos este escenario, lo que podemos hacer es ```vagr
 <a name="id2-3"></a>  
 ### 2.3. Directorio Compartido
 
-La gran mayoría de los boxes de **Vagrant** suelen crearse con un directorio compartido, es decir, un directorio que está sincronizado entre la máquina anfitriona y la máquina virtual, este directorio se suele encontrar en la ruta ```/vagrant``` de las máquinas virtuales.
+La gran mayoría de los boxes de **Vagrant** suelen crearse con un directorio compartido, es decir, un directorio que está sincronizado entre la máquina anfitriona y la máquina virtual, este directorio se suele encontrar en la ruta ```/vagrant``` de las máquinas virtuales y en el directorio dónde se encuentra el **Vagrantfile** en caso de la máquina anfitriona.
 
 Por lo tanto, lo que permite este directorio es compartir de un extremo a otro, todo tipo de archivos. 
 
@@ -143,7 +145,7 @@ Al momento de descargar un box, **Vagrant** lo que en verdad hace es, en cuanto 
 * Un fichero de metadatos
 * Un Vagrantfile que hace la configuración básica para que la máquina pueda arrancar
   
-Por lo tanto en verdad nosotros no tenemos el .box, ahora bien, digamos que nosotros necesitamos el .box para poder transportarlo a una máquina que no tiene acceso a internet y, por lo tanto no, puede descargar de la página de **Vagrant Cloud** los boxes.
+Por lo tanto en verdad nosotros no tenemos el .box, ahora bien, digamos que nosotros necesitamos el .box para poder transportarlo a una máquina que no tiene acceso a internet y, por lo tanto no, puede descargar de la página de [Vagrant Cloud](https://app.vagrantup.com/boxes/search) los boxes.
 
 Vagrant tiene una opción llamada **repackage** que lo que hace es, a partir de los elementos del box, volver a crear el .box, entonces con esto podemos llevar este .box a cualquier lugar.
 
@@ -154,22 +156,22 @@ Como podemos ver, para poder hacer el repackage necesitamos el nombre del box, e
 <a name="id2-5"></a>
 ### 2.5. Eliminiación e instalación de una imagen local
 
-En caso de que tengamos una imagen propia en local y queremos que **Vagrant** use esta en vez de alguna que esté en **Vagrant Cloud** lo que podemos hacer es indicarle el .box que queremos que use y especificarle un nombre:
+En caso de que tengamos una imagen propia en local y queremos que **Vagrant** use esta en vez de alguna que esté en [Vagrant Cloud](https://app.vagrantup.com/boxes/search) lo que podemos hacer es indicarle el .box que queremos que use y especificarle un nombre:
 
 <img src="imagenes/parte_2/vagrant_local_install.png">  
 
 <a name="id2-6"></a>
 ### 2.6. Actualización de una imagen
 
-**Vagrant** a través de **Vagrant Cloud** nos proporciona boxes los cuales con el tiempo se van actualizando.
+**Vagrant** a través de [Vagrant Cloud](https://app.vagrantup.com/boxes/search) nos proporciona boxes los cuales con el tiempo se van actualizando.
 
 Pero, ¿cómo podemos ver si el box que tenemos instalado necesita una actualización?, **Vagrant** proporciona una opción ```outdated``` la cual, con el argumento ```--global``` hace un chequeo de todos los boxes que tenemos instaladas y nos dice si necesitan actualizarse o no.
 
 <img src="imagenes/parte_2/vagrant_outdated.png">  
 
-Como podemos ver hay el box "ubuntu/trusty64" está actualizado, detecta que el box "diego-ubuntu/trusty64" no pertenece al catálogo de la comunidad de **Vagrant** y no tiene versión y por lo tanto no hay informaciíon, y, por último, detecta que hay una versión más nueva para el box "debian/jessie64" y por lo tanto necesita actualizarse.
+Como podemos ver hay el box "ubuntu/trusty64" está actualizado, detecta que el box "diego-ubuntu/trusty64" no pertenece al catálogo de la comunidad de **Vagrant** y no tiene versión y por lo tanto no hay informacíon, y, por último, detecta que hay una versión más nueva para el box "debian/jessie64" y por lo tanto necesita actualizarse.
 
-Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant init``` con lo cual nos creará un fichero Vagrantfile, tenemos que hacer un ```vagrant up --provider virtualbox``` y por último tenemos que hacer es un ```vagrant box update``` y entonces **Vagrant** se conectará a **Vagrant Cloud**, comprovará la versión descargada con la versión más nueva de la página, la descargará y la instalará.
+Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant init``` con lo cual nos creará un fichero **Vagrantfile**, tenemos que hacer un ```vagrant up --provider virtualbox``` y por último tenemos que hacer es un ```vagrant box update``` y entonces **Vagrant** se conectará a [Vagrant Cloud](https://app.vagrantup.com/boxes/search), comprobará la versión descargada con la versión más nueva de la página, la descargará y la instalará.
 
 <img src="imagenes/parte_2/vagrant_box_update.png">
 
@@ -177,7 +179,7 @@ Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant ini
 
 <img src="imagenes/parte_2/vagrant_box_update_2.png">  
 
-**Vagrant** no borrá la versión antigua por si se necesita volver a usar por cualquier motivo, pero este box ocupa espacio, entonces lo que podemo hacer es un ```vagrant prune``` para que borré las versiones antiguas y dejará solo la más actual.
+**Vagrant** no borrá la versión antigua por si se necesita volver a usar por cualquier motivo, pero este box ocupa espacio, entonces lo que podemos hacer es un ```vagrant prune``` para que borre las versiones antiguas y deje solo la más actual.
 
 <img src="imagenes/parte_2/vagrant_box_prune.png">
 
@@ -187,6 +189,7 @@ Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant ini
 
 <a name="id31"></a>
 ### 3.1. Configuración Simple
+
 Hasta ahora solo hemos usado el **Vagrantfile** para indicarle qué box tiene que levantar, pero tenemos muchas más opciones como por ejemplo indicarle un nombre de hostname, la memória que puede usar, los cpus que puede usar, etc que suelen ser los primeros pasos al crear una máquina virtual.
 
 Normalmente cada proveedor tiene sus valores determinados para estos casos y no hace falta configurar nada, pero en caso de queramos editar los valores podemos hacerlo.
@@ -204,7 +207,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Como podemos ver en el **Vagrantfile**, le hemos especificado que al momento de levantar la máquina, tenga el hostname: "diego-ubuntu", que de estar parte se encargan las opciones de configuración de virtual machine de **Vagrant**, y también le hemos especificado al proveedor, que en este caso es **VirtualBox** que de memoria tenga 1024MB y que trabaje con 2 cpus.
+Como podemos ver en el **Vagrantfile**, le hemos especificado que al momento de levantar la máquina, tenga el hostname: "diego-ubuntu" (que de esta parte se encargan las opciones de configuración de virtual machine de **Vagrant**) y también le hemos especificado al proveedor, que en este caso es **VirtualBox** que de memoria tenga 1024MB y que trabaje con 2 cpus.
 
 Al momento de hacer ```vagrant up``` podemos ver que se han realizado los cambios que hemos especificado en el fichero **Vagrantfile**:
 
@@ -214,7 +217,8 @@ Al momento de hacer ```vagrant up``` podemos ver que se han realizado los cambio
 
 <a name="id3-2"></a>
 ### 3.2. Interfaz Gráfica
-Vagrant también nos da la posibilidad de usar una interfaz gráfica que puede ser muy útil en algunos casos, por ejemplo, supongamos que estamos haciendo configuraciones con ssh y hacemos algo mal que no nos deja conectarnos por ssh a la máquina virtual, entonces no tenemos otra forma de conectarnos, aquí es cuando entra la interfaz gráfica que, siempre que tengamos al menos un usuario creado, podemos entrar sin problema.
+
+**Vagrant** también nos da la posibilidad de usar una interfaz gráfica que puede ser muy útil en algunos casos, por ejemplo, supongamos que estamos haciendo configuraciones con ssh y hacemos algo mal que no nos deja conectarnos por ssh a la máquina virtual, entonces no tenemos otra forma de conectarnos, aquí es cuando entra la interfaz gráfica que, siempre que tengamos al menos un usuario creado, podemos entrar sin problema.
 
 Para hacer que la máquina, al levantarse, ejecute una interficie gráfica es muy sencillo:
 
@@ -240,13 +244,13 @@ y al hacer un ```vagrant up``` nos abre la interfaz gráfica:
 <a name="id3-3"></a>
 ### 3.3. Aprovisionamiento Ligero
 
-Imaginemos que tenemos 10 máquinas lanzadas y las dos usan la misma imagen, lo que pasará es que por cada máquina creada habrá una imagen ocupando espacio en disco real del host anfitrión.
+Imaginemos que tenemos 10 máquinas lanzadas y todas usan la misma imagen, lo que pasará es que por cada máquina creada habrá una imagen ocupando espacio en disco real del host anfitrión.
 
-El aprovisionamiento ligero o *"thin provisioning"* consiste en que en lugar de clonar el disco que contiene la imagen de la máquina para cada una de ellas lo que hace es crear un fichero de imagen que almace unicamente las diferencias tiene respecto a la imagen inicial, por lo cual creamos un fichero de imagen mucho más pequeño y ya este fichero irá creciendo en el futuro conform hayan mas diferencias. 
+El aprovisionamiento ligero o *"thin provisioning"* consiste en que en lugar de clonar el disco que contiene la imagen de la máquina para cada una de ellas lo que hace es crear un fichero de imagen que almacena unicamente las diferencias que tiene respecto a la imagen inicial, por lo cual creamos un fichero de imagen mucho más pequeño y ya este fichero irá creciendo en el futuro conforme hayan mas diferencias. 
 
 Por lo tanto lo que nos permite este método es ahorrar mucho espacio en el disco real.
 
-Este recueso depende de cada proveedor que lo soporte, en **VirtualBox** la opción que nos permite usar aprovisionamiento ligero es [linked_clone](https://www.vagrantup.com/docs/providers/virtualbox/configuration#linked-clones) 
+Este recurso depende de cada proveedor que lo soporte, en **VirtualBox** la opción que nos permite usar aprovisionamiento ligero es [linked_clone](https://www.vagrantup.com/docs/providers/virtualbox/configuration#linked-clones) 
 
 ```
 Vagrant.configure("2") do |config|
@@ -273,13 +277,13 @@ Al inspeccionar lo que se crea al arrancar la máquina podemos ver que en lugar 
 
 Vagrant por defecto ya hace redireccionamiento: 
 
-* En un pricipio todas la máquinas virtuales están conectadas a una red interna de VirtualBox, a partir de aquí se le asigna a la máquina virtual una dirección ip dentro del segmento de la red privada y se le pone como gateway una dirección ip que VBox conecta al exterior y para que esta máquina virtual pueda acceder al exterior se hace un proceso de **Source NAT**.
+* En un pricipio todas la máquinas virtuales están conectadas a una red interna de **VirtualBox**, a partir de aquí se le asigna a la máquina virtual una dirección ip dentro del segmento de la red privada y se le pone como gateway una dirección ip que VBox conecta al exterior y para que esta máquina virtual pueda acceder al exterior se hace un proceso de **Source NAT**.
 
-* Por otra si queremos conectarnos desde el exterior (teniendo en cuenta también el host anfitrión) a la máquina virtual lo que hace **Vagrant** por defecto es redirigir por el puerto 2222 (en caso que esté en uso se usa otro puerto) de la máquina anfitriona al purto 22 de la máquina virtual.
+* Por otra parte, si queremos conectarnos desde el exterior (teniendo en cuenta también el host anfitrión) a la máquina virtual lo que hace **Vagrant** por defecto es redirigir por el puerto 2222 (en caso que esté en uso se usa otro puerto) de la máquina anfitriona al purto 22 de la máquina virtual.
 
 Pero si nosotros queremos redirigir manualmente un puerto para poder acceder a otro servicio, a apache por ejemplo, ¿Cómo se haría?
 
-Para ello vagrant tiene la opción **vm.network**, que entre cosas, nos permite hacer el port forwarding:
+Para ello vagrant tiene la opción **vm.network** que, entre cosas, nos permite hacer el port forwarding:
 
 ```
 Vagrant.configure("2") do |config|
@@ -299,7 +303,7 @@ Lo que queda hacer es un ```vagrant up```:
 
 <img src="imagenes/parte_3/punto4/vagrant_port_forwarding.png">
 
-Aquí podemos como, en los pasos que hace vagrant para preparar la máquina, hace el redireccionamiento de puertos.
+Aquí podemos ver como, en los pasos que hace vagrant para preparar la máquina, hace el redireccionamiento de puertos.
 
 Para poder demostrar el funcionamiento he instalado apache2 para ubuntu y he editado el **index.html** para que aparezca "Prueba Redireccionamiento de Puertos":
 
@@ -322,20 +326,20 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.100.50"
 end
 ```
-Como podemos en este caso he añadido la ip "192.168.100.50".
+Como podemos ver en este caso he añadido la ip "192.168.100.50".
 
 <img src="imagenes/parte_3/punto5/vagrant_private_net.png">
 
-Aquí podemos comprovar como **Vagrant**, a parte de la red por defecte que permite acceder al exterio, añade otra red que solo sirve par el entorno privado.
+Aquí podemos comprovar como **Vagrant**, a parte de la red por defecto que permite acceder al exterior, añade otra red que solo sirve par el entorno privado.
 
 <img src="imagenes/parte_3/punto5/vagrant_private_net_2.png">
 
-Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos comprovar que ahora tiene 3 interfaces: de la loopback, la que permite acceder al exterior por medio de NAT y la que está en el entorno privado.
+Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos comprobar que ahora tiene 3 interfaces: la de loopback, la que permite acceder al exterior por medio de NAT y la que está en el entorno privado.
 
 <a name="id3-6"></a>
 ### 3.6. Configuiración red pública
 
-La configuración de una red pública es bastante parecida a la privado, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo *"puente"* por media de la interficie de la máquina anfitriona que tiene acceso a internet, por lo tanto ya es el router el que se encarga de hacer el proceso de NAT y otorgarle una dirección ip a la máquina virtual.
+La configuración de una red pública es bastante parecida a la privada, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo *"puente"* por medio de la interficie de la máquina anfitriona que tiene acceso a internet, por lo tanto ya es el router el que se encarga de hacer el proceso de NAT y otorgarle una dirección ip a la máquina virtual.
 
 ```
 Vagrant.configure("2") do |config|
@@ -348,7 +352,7 @@ end
 
 <img src="imagenes/parte_3/punto6/vagrant_public_net.png">
 
-Podemos que ahora se ha añadido otra interfici, pero está vez en modo *"puente"*.
+Podemos ver que ahora se ha añadido otra interficie, pero está vez en modo *"puente"*.
 
 <img src="imagenes/parte_3/punto6/vagrant_public_net_2.png">
 
@@ -377,7 +381,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Hemos hecho la simulación de que tenemos dos servidores, uno es el servidor web que tiene acceso a internet y también tiene una ip en la red privada "10.200.100.101" y el otro es un servidoe de base de datos que no tiene acceso a internet y tiene la ip en la red privada "10.200.100.102" para que sea posible la conexión entres estos dos servidores.
+Hemos hecho la simulación de que tenemos dos servidores, uno es el servidor web que tiene acceso a internet y también tiene una ip en la red privada "10.200.100.101" y el otro es un servidor de base de datos que no tiene acceso a internet y tiene la ip en la red privada "10.200.100.102" para que sea posible la conexión entres estos dos servidores.
 
 <img src="imagenes/parte_3/punto7/vagrant_define.png">
 
@@ -386,14 +390,14 @@ Hemos hecho la simulación de que tenemos dos servidores, uno es el servidor web
 <a name="id4"></a>
 ## 4. Ejercicio Final
 
-Para este ejercico final vamos a levantar una máquina con las siguientes caraterísticas:
+Para este ejercicio final vamos a levantar una máquina con las siguientes caraterísticas:
 
 * Usará un box de [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64/versions/20210429.0.0)
 * Usará como proveedor **VirtualBox**
   * Tendrá 2GB de memoria asignados
   * Tendrá 2 cores virtuales asignados
-* Tendrá, a parte de la ip por defecte, una ip en la red privada "192.68.33.0/24"
+* Tendrá, a parte de la ip por defecto, una ip en la red privada "192.68.33.0/24"
 * A parte de directorio compartido **/vagrant**, tendrá otro en **/var/www/html** con los permisos 777 para directorios y 666 para ficheros
 * Usará un recurso de provisión para ejecutar comandos de shell, los cuales son transferidos por un fichero **.sh**
 
-Está entorno está preparados para hacer pruebas en apache2, que a su vez cuenta con módules de php, y también para hacer test en ldap.
+Este entorno está preparado para hacer pruebas en apache2, que a su vez cuenta con módulos de php, y también para hacer test en ldap.

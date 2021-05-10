@@ -42,9 +42,9 @@ resource "aws_security_group" "rds-sg" {
     security_groups = ["${aws_security_group.web-sg.id}"] #que las conexiones solo se realicen desde las instancias
   }
   ingress {
-    from_port = 3306
+    from_port = 5432
     protocol = "tcp"
-    to_port = 3306
+    to_port = 5432
     cidr_blocks = ["62.175.96.201/32"]
   }
   egress {

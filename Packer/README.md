@@ -3,8 +3,8 @@
 ## índice 
 1. [¿Qué es Packer?](#id1)  
 2. [¿Para que sirve?](#id2)  
-   2.1. [Infraestructura Imnutable](#id2-1)  
-   2.2. [Infraestructura Mutable](#id2-2)  
+   2.1. [Infraestructura Mutable](#id2-1)  
+   2.2. [Infraestructura Inmutable](#id2-2)  
 3. [Builders](#id3)  
 4. [Provisioners](#id4)  
 

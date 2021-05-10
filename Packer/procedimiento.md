@@ -2,11 +2,27 @@
 
 ## Índice
 
-1. [AWS ami](#id1)   
-2. [Vagrant Box](#id2)  
-   
+1. [Instalación](#id1)  
+2. [AWS ami](#id2)  
+3. [Vagrant Box](#id3)  
+
 <a name="id1"></a>
-## 1. AWS ami
+## 1. Instalación
+
+La instalación es muy sencilla, solo hace falta añadir el repositorio y ya estaría listo para usar.
+
+<img src="imagenes/install/packer_install_1.png">
+
+Una vez añadido el repositorio solo quedaría hacer un ```dnf -y install packer```.
+
+Tambíen podemos hacerlo descargando el binario:
+
+<img src="imagenes/install/packer_install_2.png">
+
+<img src="imagenes/install/packer_install_3.png">
+
+<a name="id2"></a>
+## 2. AWS ami
 
 Esta ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shel"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
 
@@ -23,7 +39,6 @@ sudo apt -y install php7.4
 
 sudo rm -f /var/www/html/index.html
 
-#service httpd restart
 sudo systemctl start apache2.service
 ```
 
@@ -84,8 +99,8 @@ phpinfo();
 
 ***Cabe resaltar que primero tranferimos el fichero index.php a /tmp/ ya que el provisioner file no cuenta con permisos de root ni está en el grupo de sudoers y por lo tanto no tiene persmiso de tranferir directamente el fichero a /vaar/www/html/. Entonces lo que hemos hecho es primero pasarlo /tmp/ dónde todo el mundo tiene permisos de todo y luego con comandos de shell lo copiamos a /var/www/html***
 
-<a name="id2"></a>
-## 2. Vagrant Box
+<a name="id3"></a>
+## 3. Vagrant Box
 
 Este box customizado partirá de un box con una imagen de [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64/versions/20210429.0.0) que tendrá instalados y configurados apache, php y ldap.
 
