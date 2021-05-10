@@ -11,7 +11,7 @@
    2.4. [Reempaquetar un box](#id2-4)  
    2.5. [Eliminiación e instalación de una imagen local](#id2-5)  
    2.6. [Actualización de una imagen](#id2-6)  
-3. [configuración Vagrantfile](#id3)  
+3. [Configuración Vagrantfile](#id3)  
    3.1. [Configuración Simple](#id3-1)  
    3.2. [Interfaz Gráfica](#id3-2)  
    3.3. [Aprovisionamiento Ligero](#id3-3)  
@@ -187,7 +187,7 @@ Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant ini
 ## 3. Configuración Vagrantfile
 
 
-<a name="id31"></a>
+<a name="id3-1"></a>
 ### 3.1. Configuración Simple
 
 Hasta ahora solo hemos usado el **Vagrantfile** para indicarle qué box tiene que levantar, pero tenemos muchas más opciones como por ejemplo indicarle un nombre de hostname, la memória que puede usar, los cpus que puede usar, etc que suelen ser los primeros pasos al crear una máquina virtual.
