@@ -3,7 +3,7 @@
 ## Índice
 1. [Instalación](#id1)  
 2. [Providers](#id2)  
-   1.1. [AWS Provider](#id2-1)  
+   2.1. [AWS Provider](#id2-1)  
 3. [Configuración Simple](#id3)  
    3.1. [Creación de un recurso](#id3-1)  
    3.2. [Fichero de estado](#id3-2)  
