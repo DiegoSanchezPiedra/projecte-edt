@@ -62,7 +62,7 @@ data "aws_ami" "example" {
 }
 ```
   
-<a name="id21"></a>
+<a name="id2-1"></a>
 ### 2.1. AWS Provider
 
 Para hacer la integración de **Terraform** con **AWS** lo primero que tenemos que hacer es crear una cuenta ***IAM*** en **AWS** por tal que **Terraform** pueda crear recursos.
