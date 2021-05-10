@@ -84,8 +84,8 @@ phpinfo();
 
 ***Cabe resaltar que primero tranferimos el fichero index.php a /tmp/ ya que el provisioner file no cuenta con permisos de root ni está en el grupo de sudoers y por lo tanto no tiene persmiso de tranferir directamente el fichero a /vaar/www/html/. Entonces lo que hemos hecho es primero pasarlo /tmp/ dónde todo el mundo tiene permisos de todo y luego con comandos de shell lo copiamos a /var/www/html***
 
-<a name="id2"></am
-## 2. Vagrant Box>
+<a name="id2"></a>
+## 2. Vagrant Box
 
 **install.sh:**
 ```
