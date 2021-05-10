@@ -8,7 +8,7 @@
 <a name="id1"></a>
 ## 1. AWS ami
 
-Estal ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shel"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
+Esta ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shel"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
 
 **install.sh:**
 
@@ -87,51 +87,138 @@ phpinfo();
 <a name="id2"></a>
 ## 2. Vagrant Box
 
+Este box customizado partirá de un box con una imagen de [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64/versions/20210429.0.0) que tendrá instalados y configurados apache, php y ldap.
+
 **install.sh:**
 ```
 #!/bin/bash
-sleep 30
-sudo apt update
-sudo apt -y install apache2
-sudo apt -y install software-properties-common
-sudo add-apt-repository ppa:ondrej/php
-sudo apt -y install php7.4
+sudo sleep 30
+# Update Packages
+sudo apt-get update
+# Upgrade Packages
+sudo apt-get upgrade
 
-sudo rm -f /var/www/html/index.html
-sudo cat <<'EOF' >> /var/www/html/index.php
+# Basic Linux Stuff
+sudo apt-get install -y git
+
+# Apache
+sudo apt-get install -y apache2
+
+# Enable Apache Mods
+sudo a2enmod rewrite
+
+#Add Onrej PPA Repo
+sudo apt-add-repository ppa:ondrej/php -y
+sudo apt-get update
+
+# Install PHP
+sudo apt-get install -y php7.2
+
+# PHP Apache Mod
+sudo apt-get install -y libapache2-mod-php7.2
+
+# Restart Apache
+sudo service apache2 restart
+
+# PHP Mods
+sudo apt-get install -y php7.2-common
+sudo apt-get install -y php7.2-mcrypt
+sudo apt-get install -y php7.2-zip
+
+# set slapd pass
+sudo debconf-set-selections <<< 'slapd slapd/root_password password jupiter'
+sudo debconf-set-selections <<< 'slapd slapd/root_password_again password jupiter'
+
+# install ldap moduls
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install slapd
+sudo apt-get install -y ldap-utils
+
+# configure ldap
+sudo rm -rf /etc/ldap/slapd.d/*
+sudo rm -rf /var/lib/ldap/*
+sudo cp /home/vagrant/ldap/DB_CONFIG /var/lib/ldap/.
+sudo slaptest -Q -f /home/vagrant/ldap/slapd.conf -F /etc/ldap/slapd.d &> /dev/null
+sudo slapadd -F /etc/ldap/slapd.d -l /home/vagrant/ldap/edt.org.ldif
+sudo chown -R openldap.openldap /etc/ldap/slapd.d
+sudo chown -R openldap.openldap /var/lib/ldap
+sudo cp /home/vagrant/ldap/ldap.conf /etc/ldap/ldap.conf
+sudo service slapd start
+sudo service slapd restart
+```
+
+**index.php:**
+```
 <?php
 phpinfo();
 ?>
-EOF
-
-#service httpd restart
-sudo systemctl start apache2.service
 ```
-
 **image.json:**
 
 ```
 {
-    "builder": [
-        {
-            "type": "virtualbox",
-            "source_partM": "ubuntu.box",
-            "ssh_username": "ubuntu",
-            "ssh_password": "ubuntu",
-            "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
-        }
+    "builders": [
+      {
+        "communicator": "ssh",
+        "source_path": "ubuntu/xenial64",
+        "provider": "virtualbox",
+        "type": "vagrant"
+      }
     ],
     "provisioners": [
+        {
+            "type": "file",
+            "source": "ldap",
+            "destination": "~/"
+        },
+        {
+          "type": "file",
+          "source": "index.php",
+          "destination": "~/"
+        },
         {
             "type": "shell",
             "script": "install.sh"
         }
-    ],
-    "post-processor": ["vagrant"]
+    ]
 }
 ```
 
-https://mohsensy.github.io/sysadmin/2018/07/24/vagrant-packer-tutorial.html 
+Lo que hará **Packer** será lanzar un box base, en este cabo ubuntu/xenial64 que, concretamente, contiene la imagen ubuntu 16.04 LTS, y conectarse por ssh.
 
-Ubuntu-18.04/packer_cache/
-Ubuntu-18.04/output/*.box
+Una ve lanzada empieza a hacer las configurciones de los diferentes **provisioners** que hayamos especificado, luego que se haya configurado e/o instalado todo correctamente crea la imagen y la empaqueta en un **box**.
+
+Cuando haya acabado todo este proceso hace un ```vagrant destroy``` del box base.
+
+* **builders:**
+  * communicator: Como se comunicará packer con el box de vagrant.
+  * source_path: La ruta en la cual obtiene el box (puede ser de la Vagrant Cloud, de una URL, o de un box local).
+  * provider: Que provider en concreto usará el box para poder ser lanzado, en este caso virtualbox.
+  * type: El tipo de imagen, en este caso box por ser de **Vagrant**.
+* **provisioners:**
+  * file: Nos permite tranferir elementos desde la máquina real al box creado temporalmente.
+  * shell: Nos permite ejecutar comando de shell *"inline"* o como un fichero de *"script"* en el box lanzado temporalmente.
+  
+Una vez tenemos todo configurado, hacemos ```packer build -force -debug image.json``` y nos empezará a crear el box.
+
+Una vez creado el box customizado tenemos que añadirlo a **Vagrant** con el comando ```vagrant box add output-vagrant/package.box --name diego/ubuntu``` siendo **output-vagrant/** el directorio donde se encuentra el box customizado.
+
+Creamos un fichero **Vagrantfile** diciendole las configuraciones que necesitemos:
+
+**Ejemplo Vagrantfile:**
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "diego/ubuntu"
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 386, host: 3386
+  config.vm.network "private_network", ip: "192.168.50.4"
+  config.vm.provider "virtualbox" do |vb|
+  end
+end
+```
+
+Hacemos un ```vagrant up``` y comprovamos que todo funciona correctamente:
+
+<img src="imagenes/vagrant/packer_apache_php.png">
+
+<img src="imagenes/vagrant/packer_ldap.png">

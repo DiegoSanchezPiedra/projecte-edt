@@ -1,18 +1,26 @@
 {
-    "builder": [
-        {
-            "type": "virtualbox",
-            "source_partM": "ubuntu.box",
-            "ssh_username": "ubuntu",
-            "ssh_password": "ubuntu",
-            "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
-        }
+    "builders": [
+      {
+        "communicator": "ssh",
+        "source_path": "ubuntu/xenial64",
+        "provider": "virtualbox",
+        "type": "vagrant"
+      }
     ],
     "provisioners": [
+        {
+            "type": "file",
+            "source": "ldap",
+            "destination": "~/"
+        },
+        {
+          "type": "file",
+          "source": "index.php",
+          "destination": "~/"
+        },
         {
             "type": "shell",
             "script": "install.sh"
         }
-    ],
-    "post-processor": ["vagrant"]
-}
+    ]
+  }
