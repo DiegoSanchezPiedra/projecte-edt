@@ -16,7 +16,7 @@
    3.2. [Interfaz Gráfica](#id3-2)  
    3.3. [Aprovisionamiento Ligero](#id3-3)  
    3.4. [Redirección de puertos](#id3-4)  
-   3.5. [Configuración red prvada](#id3-5)  
+   3.5. [Configuración red privada](#id3-5)  
    3.6. [Configuración red pública](#id3-6)  
    3.7. [Multimáquinas](#id3-7)  
 4. [Ejercicio Final](#id4)
