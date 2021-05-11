@@ -1,0 +1,17 @@
+hola buenas mi nombre es diego sanchez y voy a presentar mi proyecto que es sobre vagrant terraform y packer
+
+vagrant es una herramienta que se interpone entre nosotros y nuetro proveedor de máquinas virtuales permitiendonos asi crear ambitos de desarrollo o de pruebas de forma muy sencilla ya que se basa en un fichero de configuracion  de texto plano escrito en luanguaje Ruby y siendo a la vez portable 
+
+el contenido de esta parte consta de una introduccion y un documento donde encontraremos ejemplos prácticos con explicaciones, seguidamente hay un ejercicio final donde aplican los ejemplos practicos explicados anteriormente
+
+terraform es una herramienta que nos permite el despliegue de infraestructuras, basandose en el metodo de infraestructura como codigo.
+
+nos permite decribir, evaluar y aplicar cambios en la infraestructura existente o que está por ser creada
+
+Podemos usarlo con un gran numero de proveedores, entre ellos se encuentra AWS que donde se harán los ejemplos prácticos y el ejercicio final
+
+Esta parte consta de un documento introductorio y otro documento donde se hayan los ejemplos prácticos con explicaciones y seguidamente de un ejercicio final donde se aplican estos ejemplos practicos.
+
+packer es una herramienta de creacion de imagenes customizadas para diferentes entornos de una gran cantidad de proveedores que packer llama builders, entre ellos se encuentra vagrant con los boxex y aws con las amis que es con los que trabajreé
+
+En esta parte enctrarán una introduccion donde también hay una pequeña explicacion sobre el tipo de infraestructura mutable e infraetructura inmutable ya que es fundamental para este tema y un documento donde se haya la creacion de un box para vagrant explicado paso por paso y la creacion de una ami de AWS explicada paso a pso también 
