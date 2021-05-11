@@ -10,10 +10,10 @@
             "ssh_username": "ubuntu"
         }
     ],
-    "provisionaer": [
+    "provisioners": [
         {
             "type": "shell",
-            "script": "intall.sh"
+            "script": "install.sh"
         },
         {
             "type": "file",
