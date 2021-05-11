@@ -6,7 +6,7 @@ date: "2021-05-10"
 
 # Vagrant
 
-![vagrant](imagenes/vagrant/vagrant_logo.png)
+![](imagenes/vagrant/vagrant_logo.png)
 
 # Lenguaje Declarativo:
 
@@ -72,23 +72,23 @@ date: "2021-05-10"
 
 *  Problema:
 
-  <img src="imagenes/packer/mutable_infraestructure_4.png"><br>
+  ![](imagenes/packer/mutable_infraestructure_4.png)
 
 *  Solución:
   
-<img src="imagenes/packer/solucion.png"><br>
-
+  ![](imagenes/packer/solucion.png)
 # Infraestructura Inmutable:
 
-<img src="imagenes/packer/inmutable_infraestructure_2.png"><br>
 
-<img src="imagenes/packer/inmutable_infraestructure_1.png"><br>
+  ![](imagenes/packer/inmutable_infraestructure_2.png)
+
+  ![](imagenes/packer/inmutable_infraestructure_1.png)
 
 # Ejercicios Finales:
   * Terraform:  
   
-    <img src="imagenes/packer/ejercicio_final_terraform.png"><br>
+    ![](imagenes/packer/ejercicio_final_terraform.png)
 
   * Vagrant:  
   
-    <img src="imagenes/packer/ejercicio_final_vagrant.png"><br>
+    ![](imagenes/packer/ejercicio_final_vagrant.png)
