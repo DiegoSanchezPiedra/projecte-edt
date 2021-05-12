@@ -1,0 +1,3 @@
+pandoc -t revealjs -s -o presentacio.html presentacion.md -V revealjs-url=./reveal.js -V theme=black
+
+https://github.com/jgm/pandoc/wiki/Using-pandoc-to-produce-reveal.js-slides
