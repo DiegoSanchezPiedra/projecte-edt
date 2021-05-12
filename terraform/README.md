@@ -82,7 +82,21 @@ Este componente es responsable de 2 elementos principales:
 
 Los proveedores vienen a ser como **terraform** se conecta al munto exterior, estos proveedores pueden ser **IaaS** (Infraestructure as a Service), **PaaS** (Platform as a Service) o **SaaS** (Software as a Service).
 
-Y los mas importante es que **terraform** puede unificar estos 3 servicios para que traben juntos en una misma infraestrucutra, por ejemplo en uns infraestructura queremos tener una infraestructura en **AWS**, en esta implementar **Kubernetes** y luego añadir servicios dentro del clúster de **Kubernetes**.
+* **Iaas:**
+  En esta modalidad el proveedor se encarga de proporcionar todo el hardware necesario para poder administrar nuestra infraestructura, es decir nosotros nos encargamos de todas la configuraciones de nuestra infraestructura, por ejemplo el sistema operativo, las aplicaciones necesarias, etc.
+
+  Algunas de las empresas que proporcionan estos servicios son:
+
+  <img src="imagenes/aws_logo.png" width="20%"><br>
+
+  <img src="imagenes/microsoft_azure_logo.jpg" width="30%">
+
+* **PaaS:**
+  Aquí el proveedor proporciona un sistame completamente en funcionamiento con la infraestructura ya configurada, por ejemplo en caso de seamos desarrolladores y necesitemos programar tendríamos todo ya instalado y configurado para poder centrarnos en programar.
+
+  <img src="imagenes/openshift_redhat.png" width="30%">
+* **Saas:**
+Y los mas importante es que **terraform** puede unificar estos 3 servicios para que trabajen juntos en una misma infraestrucutra, por ejemplo en uns infraestructura queremos tener una infraestructura en **AWS**, en esta implementar **Kubernetes** y luego añadir servicios dentro del clúster de **Kubernetes**.
 
 Terraform cuenta con más de 100 proveedores y estos pueden, individualmente, gestionar miles de recursos que tiene cada uno de ellos.
 
