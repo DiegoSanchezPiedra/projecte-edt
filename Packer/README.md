@@ -45,12 +45,17 @@ El problema viene cuando tenemos muchos servidores que desplegar, entonces tendr
 
 Para este problema la solución que la mayoría de personas acude es usar Herramientas de la configuración como **Ansible** que se hará cargo de que todos los servidores que han sido desplegados tengas la configuración necesaria. 
 
+Una de las soluciones, que es muy utilizado, es el uso de **Herramientas de la configuración** que se encargarán de hacer llegar las configuraciones e instalciones a cada servidor.
+
+Una de estas herramientas es [Ansible](https://www.ansible.com/)
+
 <img src="imagenes/ansible_logo.svg">
 
-Esta es una solución muy viable y que casi todo el mundo, pero tambíen hay una alternativa que es muy interesante.
 
 <a name="id2-2"></a>
 ### 2.2. Infraestructra Inmutable
+
+Otra de las soluciones es usar la infraestructura inmutable:
 
 Digamos que en lugar de primero hacer el deploy y luego aplicar los cambios y configuraciones del servidor, primero hacemos la configuración y luego hacemos el deploy:
 

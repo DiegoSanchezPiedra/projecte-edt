@@ -16,6 +16,8 @@
    3.9. [Security Groups](#id3-9)  
    3.10. [Relational Data Base](#id3-10)  
 4. [Ejercicio Final](#id4)  
+5. [Conclusiones](#id5)  
+6. [Bibliografía](#id6)  
 
 <a name="id1"></a>
 ### 1. Instalación  
@@ -650,3 +652,13 @@ Para este ejercicio final tendremos:
 * Habrá una instancia de RDB de postgres que tambíen contará con su security group permitiendo el tráfico del puerto 5432. 
 
 * Y, por último, todos estos recursos y servicios estarán dentro de una **VPC**
+  
+<a name="id5"></a>
+## 5. Conclusiones
+
+Con Terraform me he podido profundizar más en el mundo del despliegue y automatización de infraestructuras mediante código.
+
+Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/ docs/index.html) como la que hay por parte externa.
+
+<a name="id6"></a>
+## 6. Bibliografía

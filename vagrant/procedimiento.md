@@ -20,6 +20,8 @@
    3.6. [Configuración red pública](#id3-6)  
    3.7. [Multimáquinas](#id3-7)  
 4. [Ejercicio Final](#id4)
+5. [Conclusiones](#id5)  
+6. [Bibliografía](#id6)  
 
 <a name="id1"></a>
 ## 1. Instalación
@@ -401,3 +403,13 @@ Para este ejercicio final vamos a levantar una máquina con las siguientes carat
 * Usará un recurso de provisión para ejecutar comandos de shell, los cuales son transferidos por un fichero **.sh**
 
 Este entorno está preparado para hacer pruebas en apache2, que a su vez cuenta con módulos de php, y también para hacer test en ldap.
+
+<a name="id5"></a>
+## 5. Conclusiones
+
+Con **Vagrant** me he encontrado que es muy fácil de utilizar si se tiene un conocimiento básico de la programación ya que usa el lenguje **Ruby** que es de alto nivel y muy fácil de entender.
+
+También me ha sido de mucha ayuda para hacer las pruebas para los otros temas lanzando máquinas virtuales con diferentes sistemas operativos e instalando y configurando software en estas para poder asegurarme que todo vaya bien antes de hacer el despliegue.
+
+<a name="id6"></a>
+## 6. Bibliografía

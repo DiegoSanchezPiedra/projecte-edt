@@ -6,7 +6,8 @@ date: "2021-05-10"
 
 # Vagrant
 
-![](imagenes/vagrant/vagrant_logo.png)
+<!--![](imagenes/vagrant_logo.png)-->
+<img src="imagenes/vagrant_logo.png">
 
 # Lenguaje Declarativo:
 
@@ -44,6 +45,8 @@ date: "2021-05-10"
 
 ![](imagenes/terraform/utilidad.png)
 
+# 
+
 ![](imagenes/terraform/utilidad_2.png)
 
 # Workflow:
@@ -58,7 +61,7 @@ date: "2021-05-10"
 
 ![](imagenes/terraform/ejercicio_final.png)
 
-% Packer
+# Packer
 
 # ¿Qué es Packer?:
 
@@ -68,27 +71,32 @@ date: "2021-05-10"
 
 ![](imagenes/packer/mutable_infraestructure.png)
 
+# 
+
 ![](imagenes/packer/mutable_infraestructure_3.png)
 
-*  Problema:
+#  Problema:
 
-  ![](imagenes/packer/mutable_infraestructure_4.png)
+![](imagenes/packer/mutable_infraestructure_4.png)
 
-*  Solución:
+#  Solución:
   
-  ![](imagenes/packer/solucion.png)
+![](imagenes/packer/solucion.png)
+
 # Infraestructura Inmutable:
 
+![](imagenes/packer/inmutable_infraestructure_2.png)
 
-  ![](imagenes/packer/inmutable_infraestructure_2.png)
+#
 
-  ![](imagenes/packer/inmutable_infraestructure_1.png)
+![](imagenes/packer/inmutable_infraestructure_1.png)
 
 # Ejercicios Finales:
-  * Terraform:  
   
-    ![](imagenes/packer/ejercicio_final_terraform.png)
+# Terraform:  
+  
+![](imagenes/packer/ejercicio_final_terraform.png)
 
-  * Vagrant:  
+# Vagrant:  
   
-    ![](imagenes/packer/ejercicio_final_vagrant.png)
+![](imagenes/packer/ejercicio_final_vagrant.png)

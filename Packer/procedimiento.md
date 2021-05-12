@@ -5,6 +5,8 @@
 1. [Instalación](#id1)  
 2. [AWS ami](#id2)  
 3. [Vagrant Box](#id3)  
+4. [Conclusiones](#id4)  
+5. [Bibliografia](#id5)  
 
 <a name="id1"></a>
 ## 1. Instalación
@@ -237,3 +239,11 @@ Hacemos un ```vagrant up``` y comprovamos que todo funciona correctamente:
 <img src="imagenes/vagrant/packer_apache_php.png">
 
 <img src="imagenes/vagrant/packer_ldap.png">
+
+<a name="id4"></a>
+## 4. Conclusiones
+
+Con packer he descubierto los dos tipos de infraestructura que son la mutable y la inmutable, de las cuales me he centrado en la infraestructura imnutable ya que es la solución que da **Packer** ante el problema explicado en la introducción.
+
+<a name="id5"></>
+## 5. Bibliografia
