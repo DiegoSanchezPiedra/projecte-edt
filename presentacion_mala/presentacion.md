@@ -100,3 +100,7 @@ date: "2021-05-10"
 # Vagrant:  
   
 ![](imagenes/packer/ejercicio_final_vagrant.png)
+
+pandoc -t revealjs -s -o presentacio.html presentacion.md -V revealjs-url=./reveal.js -V theme=black
+
+https://github.com/jgm/pandoc/wiki/Using-pandoc-to-produce-reveal.js-slides
