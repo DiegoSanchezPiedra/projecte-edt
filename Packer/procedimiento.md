@@ -247,3 +247,11 @@ Con packer he descubierto los dos tipos de infraestructura que son la mutable y 
 
 <a name="id5"></>
 ## 5. Bibliografia
+
+https://www.packer.io/docs
+
+https://www.packer.io/
+
+https://github.com/hashicorp/packer
+
+https://openwebinars.net/

@@ -662,3 +662,15 @@ Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nu
 
 <a name="id6"></a>
 ## 6. Bibliografía
+
+https://github.com/hashicorp/terraform
+
+https://www.terraform.io/docs/index.html
+
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+https://openwebinars.net/
+
+https://aws.amazon.com/blogs/apn/terraform-beyond-the-basics-with-aws/
+
+https://www.toptal.com/devops/terraform-aws-cloud-iac

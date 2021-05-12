@@ -413,3 +413,17 @@ También me ha sido de mucha ayuda para hacer las pruebas para los otros temas l
 
 <a name="id6"></a>
 ## 6. Bibliografía
+
+https://www.vagrantup.com/docs 
+
+https://phoenixnap.com/kb/vagrant-beginner-tutorial
+
+https://medium.com/swlh/hashicorp-vagrant-101-6f7e613d8af
+
+https://www.vagrantbox.es/
+
+https://openwebinars.net/
+
+https://github.com/hashicorp/vagrant
+
+https://ashki23.github.io/vagrant.html
