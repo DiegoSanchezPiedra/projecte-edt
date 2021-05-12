@@ -96,7 +96,7 @@ Los proveedores vienen a ser como **terraform** se conecta al munto exterior, es
 
   <img src="imagenes/openshift_redhat.png" width="30%"><br>
 
-  <img src="imagenes/cloud_aplications_oracle.jpg" width="30%">
+  <img src="imagenes/cloud_aplications_oracle.jpg" width="20%">
 * **Saas:**
 Y los mas importante es que **terraform** puede unificar estos 3 servicios para que trabajen juntos en una misma infraestrucutra, por ejemplo en uns infraestructura queremos tener una infraestructura en **AWS**, en esta implementar **Kubernetes** y luego añadir servicios dentro del clúster de **Kubernetes**.
 
