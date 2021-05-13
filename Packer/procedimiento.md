@@ -247,7 +247,7 @@ Con packer he descubierto los dos tipos de infraestructura que son la mutable y 
 
 Y podemos usar esta ami customizada ,que ya cuenta con la instalación y configuración de apache y php, en AWS para desplegar la infraestructura y nos ahorramos tener que acudir a un aprovisionador para realizar esta instalación y configuración. También pasaría con **Vagrant** y la box customizada.
 
-<a name="id5">
+<a name="id5"></a>
 ## 5. Bibliografia
 
 https://www.packer.io/docs
