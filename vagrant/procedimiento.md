@@ -341,7 +341,13 @@ Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos c
 <a name="id3-6"></a>
 ### 3.6. Configuiración red pública
 
-La configuración de una red pública es bastante parecida a la privada, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo *"puente"* por medio de la interficie de la máquina anfitriona que tiene acceso a internet, por lo tanto ya es el router el que se encarga de hacer el proceso de NAT y otorgarle una dirección ip a la máquina virtual.
+La configuración de una red pública es bastante parecida a la privada, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo ***bridge***.
+
+Lo que hace el modo ***bridge*** es replicar permitir a la máquina virtual acceder a la red física, es decir la red en la que está el router que permite el acceso al exterior, **VirtualBox** consigue hacer esto mediante un driver en la máquina anfitriona que filtra los datos que van hacia la máquina virtual por medio de la interficie de red de la máquina anfitriona, este driver es llamado ***net filter***.
+
+Por lo tanto así hace la simulación de que es otro host que se encuentra en la red del router y este le proporciona una IP y acceso al exterior por medio de SNAT.
+
+<img src="imagenes/parte_3/punto6/bridge_mode.gif">
 
 ```
 Vagrant.configure("2") do |config|
@@ -427,3 +433,5 @@ https://openwebinars.net/
 https://github.com/hashicorp/vagrant
 
 https://ashki23.github.io/vagrant.html
+
+https://www.virtualbox.org/manual/ch06.html#network_bridged

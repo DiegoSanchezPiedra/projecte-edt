@@ -76,7 +76,17 @@ En caso de tengamos que añadir, cambiar el código de nuestra aplicación, camb
 
 La función de los **builders** es crear una máquina y generar una imagen para la plataforma que el builder pertenezca, por ejemplo **AWS** con las ***instances*** y **Vagrant** con las ***boxes***.
 
+<img src="imagenes/aws_ami.png" width="30%">
+
+<img src="imagenes/vagrant_box.png">
+
 <a name="id4"></a>
 ## 4. Provisioners
 
 Es donde podemos confiugrar e instalar nuestra imagen, por ejemplo instalar paquetes, crear usuarios, hacer la configuraciones necesarias, etc.
+
+Packer cuenta con una gran cantidad de aprovisionadores, como por ejemplo [shell](https://www.gnu.org/software/bash/), [chef](https://www.chef.io/solutions/configuration-management), [puppet](https://puppet.com/use-cases/continuous-configuration-automation/), [ansible](https://www.ansible.com/use-cases/configuration-management), etc.
+
+<img src="imagenes/shell.jpg" width="40%">
+
+<img src="imagenes/cm-tools.png" width="40%">

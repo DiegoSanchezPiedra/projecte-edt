@@ -151,6 +151,12 @@ En este punto trataremos la creación de una plantilla simple de **Terraform**.
 
 Para este punto vamos a crear un recurso básico y simple, que es un **vpc** de **AWS**, que viene a ser una red privada donde se pueden lanzar distintos recursos de **AWS**.
 
+Una Amazon Virtual Private Cloud (**VPC**) es un servicio que permite lanzar recursos de AWS en una red virtual aislada que nosotros definamos, en este servicio podemos crear subnets, configurar la tabla de enrutamiento y crear y configurar puertas de enlace (**gateways**)
+
+Con la **VPC** podemos crear tanto subnet públicas (aquí podriamos poner un servidor en el que se tiene acceso desde el exterior) como subnets privadas (aquí se podría poner un base de datos por ejemplo), también podemos añadir capas de seguridad como **Security Groups** y **listas de acceso por IP**.
+
+<img src="imagenes/parte_3/punto1/vpc.png" width="50%">
+
 Para indicarle a **Terraform** que queremos crear un **vpc** tenemos que poner lo siguiente:
 
 ```
@@ -658,7 +664,7 @@ Para este ejercicio final tendremos:
 
 Con Terraform me he podido profundizar más en el mundo del despliegue y automatización de infraestructuras mediante código.
 
-Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/ docs/index.html) como la que hay por parte externa.
+Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/docs/index.html) como la que hay por parte externa.
 
 <a name="id6"></a>
 ## 6. Bibliografía
@@ -674,3 +680,5 @@ https://openwebinars.net/
 https://aws.amazon.com/blogs/apn/terraform-beyond-the-basics-with-aws/
 
 https://www.toptal.com/devops/terraform-aws-cloud-iac
+
+https://aws.amazon.com/vpc/?vpc-blogs.sort-by=item.additionalFields.createdDate&vpc-blogs.sort-order=desc

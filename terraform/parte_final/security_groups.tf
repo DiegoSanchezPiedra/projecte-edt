@@ -45,7 +45,7 @@ resource "aws_security_group" "rds-sg" {
     from_port = 5432
     protocol = "tcp"
     to_port = 5432
-    cidr_blocks = ["176.85.108.166/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     from_port = 0

@@ -2,7 +2,10 @@
 title: presentacion proyecto edt
 author: Diego Sanchez
 date: "2021-05-10"
----  
+---
+
+# Vagrant Terraform Packer
+
 # Vagrant
 ## Lenguaje Declarativo:
 
@@ -21,7 +24,7 @@ date: "2021-05-10"
 
 <img src="imagenes/vagrant/architecture.svg" width="40%" style="float:left">
 
-<img src="imagenes/vagrant/Vagrantfile.png" width="40%" style="float:right">
+<img src="imagenes/vagrant/Vagrantfile.png" width="50%" style="float:right">
 
 ## Portabilidad:
 
@@ -103,3 +106,5 @@ Vagrant box: <br>
 
 <img src="imagenes/packer/final_vagrant.png" width="100%">
 </div>
+
+# GRACIAS
