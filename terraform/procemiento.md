@@ -658,7 +658,7 @@ Para este ejercicio final tendremos:
 
 Con Terraform me he podido profundizar más en el mundo del despliegue y automatización de infraestructuras mediante código.
 
-Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/ docs/index.html) como la que hay por parte externa.
+Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/docs/index.html) como la que hay por parte externa.
 
 <a name="id6"></a>
 ## 6. Bibliografía

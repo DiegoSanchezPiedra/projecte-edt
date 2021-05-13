@@ -76,6 +76,9 @@ En caso de tengamos que añadir, cambiar el código de nuestra aplicación, camb
 
 La función de los **builders** es crear una máquina y generar una imagen para la plataforma que el builder pertenezca, por ejemplo **AWS** con las ***instances*** y **Vagrant** con las ***boxes***.
 
+<img src="imagenes/aws_ami.png" width="40%">
+
+<img src="imagenes/vagrant_box.png">
 <a name="id4"></a>
 ## 4. Provisioners
 
