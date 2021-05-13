@@ -245,7 +245,9 @@ Hacemos un ```vagrant up``` y comprovamos que todo funciona correctamente:
 
 Con packer he descubierto los dos tipos de infraestructura que son la mutable y la inmutable, de las cuales me he centrado en la infraestructura imnutable ya que es la solución que da **Packer** ante el problema explicado en la introducción.
 
-<a name="id5"></>
+Y podemos usar esta ami customizada ,que ya cuenta con la instalación y configuración de apache y php, en AWS para desplegar la infraestructura y nos ahorramos tener que acudir a un aprovisionador para realizar esta instalación y configuración. También pasaría con **Vagrant** y la box customizada.
+
+<a name="id5">
 ## 5. Bibliografia
 
 https://www.packer.io/docs

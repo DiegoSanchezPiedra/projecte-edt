@@ -85,6 +85,8 @@ La función de los **builders** es crear una máquina y generar una imagen para 
 
 Es donde podemos confiugrar e instalar nuestra imagen, por ejemplo instalar paquetes, crear usuarios, hacer la configuraciones necesarias, etc.
 
+Packer cuenta con una gran cantidad de aprovisionadores, como por ejemplo [shell](https://www.gnu.org/software/bash/), [chef](https://www.chef.io/solutions/configuration-management), [puppet](https://puppet.com/use-cases/continuous-configuration-automation/), [ansible](https://www.ansible.com/use-cases/configuration-management), etc.
+
 <img src="imagenes/shell.jpg" width="40%">
 
 <img src="imagenes/cm-tools.png" width="40%">
