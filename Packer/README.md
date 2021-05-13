@@ -84,3 +84,7 @@ La función de los **builders** es crear una máquina y generar una imagen para 
 ## 4. Provisioners
 
 Es donde podemos confiugrar e instalar nuestra imagen, por ejemplo instalar paquetes, crear usuarios, hacer la configuraciones necesarias, etc.
+
+<img src="imagenes/shell.jpg" width="40%">
+
+<img src="imagenes/cm-tools.png" width="40%">
