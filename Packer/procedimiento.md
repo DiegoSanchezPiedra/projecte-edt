@@ -26,7 +26,7 @@ Tambíen podemos hacerlo descargando el binario:
 <a name="id2"></a>
 ## 2. AWS ami
 
-Esta ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shel"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
+Esta ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shell"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
 
 **install.sh:**
 
@@ -96,10 +96,10 @@ phpinfo();
 
 *  **provisioners:**
    *  Usaremos dos tipos de provisioners:  
-      *  shell: Eue nos permite ejecutar comandos de shell, en el cual le pasaremos un fichero .sh el cual contiene la instalación de apache2 y php además de una pequeña configuración.
-      *  file: El cual nos permite tranferir ficheros de la máquina host al host remoto donde se lanzará instancia, en este caso en concreto le estamos pasando un fichero de nombre *"index.php"* qu contiene un función que muestra información sobre el módulo php.
+      *  shell: Este provisioner nos permite ejecutar comandos de shell, en el cual le pasaremos un fichero .sh el cual contiene la instalación de apache2 y php además de una pequeña configuración.
+      *  file: Es el cual nos permite tranferir ficheros de la máquina host al host remoto donde se lanzará la instancia, en este caso en concreto le estamos pasando un fichero de nombre *"index.php"* que contiene una función que muestra información sobre el módulo php ```phpinfo()```.
 
-***Cabe resaltar que primero tranferimos el fichero index.php a /tmp/ ya que el provisioner file no cuenta con permisos de root ni está en el grupo de sudoers y por lo tanto no tiene persmiso de tranferir directamente el fichero a /vaar/www/html/. Entonces lo que hemos hecho es primero pasarlo /tmp/ dónde todo el mundo tiene permisos de todo y luego con comandos de shell lo copiamos a /var/www/html***
+***Cabe resaltar que primero tranferimos el fichero index.php a /tmp/ ya que el provisioner file no cuenta con permisos de root ni está en el grupo de sudoers y por lo tanto no tiene persmiso de tranferir directamente el fichero a /var/www/html/. Entonces lo que hemos hecho es primero pasarlo a /tmp/ dónde todo el mundo tiene permisos tanto de escritura como de lectura y luego con comandos de shell lo copiamos a /var/www/html***
 
 <a name="id3"></a>
 ## 3. Vagrant Box
