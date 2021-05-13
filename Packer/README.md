@@ -79,6 +79,7 @@ La función de los **builders** es crear una máquina y generar una imagen para 
 <img src="imagenes/aws_ami.png" width="30%">
 
 <img src="imagenes/vagrant_box.png">
+
 <a name="id4"></a>
 ## 4. Provisioners
 
