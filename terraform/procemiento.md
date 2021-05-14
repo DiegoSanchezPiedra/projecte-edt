@@ -1,26 +1,32 @@
 # Procedimiento
 
 ## Índice
-1. [Instalación](#id1)  
-2. [Providers](#id2)  
-   2.1. [AWS Provider](#id2-1)  
-3. [Configuración Simple](#id3)  
-   3.1. [Creación de un recurso](#id3-1)  
-   3.2. [Fichero de estado](#id3-2)  
-   3.3. [Varibales](#id3-3)  
-   3.4. [Outputs y Recurso Instancias](#id3-4)  
-   3.5. [Templates](#id3-5)  
-   3.6. [Múltiples Recursos](#id3-6)  
-   3.7. [Interpolación](#id3-7)  
-   3.8. [Elastic Load Balance](#id3-8)  
-   3.9. [Security Groups](#id3-9)  
-   3.10. [Relational Data Base](#id3-10)  
-4. [Ejercicio Final](#id4)  
-5. [Conclusiones](#id5)  
-6. [Bibliografía](#id6)  
+1. [Idea Principal](#id1)  
+2. [Instalación](#id2)  
+3. [Providers](#id3)  
+   3.1. [AWS Provider](#id3-1)  
+4. [Configuración Simple](#id4)  
+   4.1. [Creación de un recurso](#id4-1)  
+   4.2. [Fichero de estado](#id4-2)  
+   4.3. [Varibales](#id4-3)  
+   4.4. [Outputs y Recurso Instancias](#id4-4)  
+   4.5. [Templates](#id4-5)  
+   4.6. [Múltiples Recursos](#id4-6)  
+   4.7. [Interpolación](#id4-7)  
+   4.8. [Elastic Load Balance](#id4-8)  
+   4.9. [Security Groups](#id4-9)  
+   4.10. [Relational Data Base](#id4-10)  
+5. [Ejercicio Final](#id5)  
+6. [Conclusiones](#id6)  
+7. [Bibliografía](#id7)  
 
 <a name="id1"></a>
-### 1. Instalación  
+## 1. Idea Principal
+
+La idea de principal de este documento es hacer la instalación de **Terraform** y el **CLI** de AWS, seguidamente hacer una serie de ejemplos prácticos para finalmente hacer un ejercicio final donde se aplican los ejemplos explicados anteriormente.
+
+<a name="id2"></a>
+## 2. Instalación  
 
 La instalación de Terraform un muy sencilla, para poder instalarlo tenemos que descargar un archivo comprimdo que contiene el binario de **Terraform** de la la página de [Terraform](https://www.terraform.io/downloads.html), ahí encontraremos las diferentes opciones para los diferentes sistemas operativos y distribuciones disponibles como MacOS,FreeBSD, Linux, OpenBSD, Solaris, Windows, también encontramos opciones a la arquitectura, ya sea 32-bits, 64-bits, Arm o Arm64.
 
@@ -34,8 +40,8 @@ Lo descomprimimos y lo movemos al directorio /usr/bin/ para poder ejecutarlo des
 
 y ya estaría instalado y listo para usarse.
 
-<a name="id2"></a>
-### 2. Providers
+<a name="id3"></a>
+### 3. Providers
 
 Los providers son ***"plugins"*** que permiten a **Terraform** interactuar con sistemas remotos, la primera configuracón de **Terraform** tiene que ser la declaración de que providers vamos a usar, así él puede instalarlos y usar los tipos de recursos (***resource types***) y fuente de datos (***data sources***).
 
@@ -64,8 +70,8 @@ data "aws_ami" "example" {
 }
 ```
   
-<a name="id2-1"></a>
-### 2.1. AWS Provider
+<a name="id3-1"></a>
+### 3.1. AWS Provider
 
 Para hacer la integración de **Terraform** con **AWS** lo primero que tenemos que hacer es crear una cuenta ***IAM*** en **AWS** por tal que **Terraform** pueda crear recursos.
 
@@ -141,13 +147,13 @@ y hacemos ```terraform init``` en el directori donde se encuentra este fichero .
 
 Esto lo que hará es instalar todos los plugins necesarios para poder usar los recursos que proporciona el proveedor de **AWS**.
 
-<a name="id3"></a>
-## 3. Configuración Simple
+<a name="id4"></a>
+## 4. Configuración Simple
 
 En este punto trataremos la creación de una plantilla simple de **Terraform**.
 
-<a name="id3-1"></a>
-### 3.1. Creación de un recurso
+<a name="id4-1"></a>
+### 4.1. Creación de un recurso
 
 Para este punto vamos a crear un recurso básico y simple, que es un **vpc** de **AWS**, que viene a ser una red privada donde se pueden lanzar distintos recursos de **AWS**.
 
@@ -189,8 +195,8 @@ También podemos ver que en algún momento nos ha pedido la confimación para ha
 
 Y si nos dirigimos a la página de **AWS** vemos que nuestro **vpc** se ha creado correctamente, con los tags y la ip indicados.
 
-<a name="id3-2"></a>
-### 3.2. Fichero de estado
+<a name="id4-2"></a>
+### 4.2. Fichero de estado
 
 Al momento de hacer el ```terraform apply``` en el punto anterior, es decir cuando creamos el **vpc**, **Terraform** crea un fichero de nombre **terraform.tfstate** el cual contiene el estado de la infraestructura que tiene **AWS** y de lo que se ha creado en él.
 
@@ -223,8 +229,8 @@ y si actualizamos la página de **AWS** vemos que se aplican los cambios:
 **También es importante fijarnos los cambios que se pueden hacer ```in-place``` , es decir que se pueden aplicar en caliente y lo que fuerzan a hacer un destroy y un add, esto lo sabremos haciendo ```terraform plan```**
 
 
-<a name="id3-3"></a>
-### 3.3. Variables
+<a name="id4-3"></a>
+### 4.3. Variables
 
 Con el uso de variables tendremos la posibildad de crear plantillas que sean modificables ya que los valores se encontrarán en un único fichero .tf y por lo tanto podremos acceder inmediatamente.
 
@@ -255,8 +261,8 @@ resource "aws_vpc" "vpc" {
 
 También es de buena práctica mantener el directorio de trabajo ordenado, y aprovechando que **Terraform** nos permite tener más de un fichero .tf separaremos los diferentes recursos que usemos en ficheros diferentes.
 
-<a name="id3-4"></a>
-### 3.4. Outputs y Recurso Instancia
+<a name="id4-4"></a>
+### 4.4. Outputs y Recurso Instancia
 
 Para este apartado crearemos una instancia de tipo **ec2**, para ello necesitamos declarar un nuevo recurso de **AWS** llamado: ```aws_instance```:
 
@@ -303,8 +309,8 @@ Ahora queda hacer un ```terraform apply``` y ver el resultado del output:
 
 <img src="imagenes/parte_3/punto4/terraform_output_2.png">
 
-<a name="id3-5"></a>
-### 3.5. Templates
+<a name="id4-5"></a>
+### 4.5. Templates
 
 El recurso **templates** es muy útil ya que, entre otras utilidades, nos permite hacer scripts con variables que se les puede pasar para luego ejecutarlo como **user_data**, **user-data** viene a ser la utilidad que tiene **AWS** para ejecutar scripts. 
 
@@ -357,8 +363,8 @@ Ahora queda hacer un ```terraform apply --auto-approval``` para poder aplicar lo
 
 Podemos ver que en **AWS** se ha aplicado el script en user_data.
 
-<a name="id3-6"></a>
-### 3.6. Múltiples recursos
+<a name="id4-6"></a>
+### 4.6. Múltiples recursos
 
 **Terraform** tiene dos opciones muy útiles para lanzar varios recursos a la vez sin tener que poner la misma estructura repetitivamente, estas opciones son:
 
@@ -451,8 +457,8 @@ Hacemos ```terraform apply``` y comprobamos que los recursos e instancia se han 
 
 <img src="imagenes/parte_3/punto6/terraform_autoscaling_3.png" alt="autoscaling">
 
-<a name="id3-7"></a>
-### 3.7. Interpolación:
+<a name="id4-7"></a>
+### 4.7. Interpolación:
 
 Este tipo de interpolación es muy útil ya que dependiendo de la región donde nos encontremos cambiarán los IDs de las amis de **AWS**, por lo tanto creamos esta utilidad para que sea mucho más fácil usar la ami correcta dependiendo de la región donde nos encontramos.
 
@@ -511,8 +517,8 @@ variable "region" {
 }
 ```
 
-<a name="id3-8"></a>
-### 3.8. Elastic Load Balancer:
+<a name="id4-8"></a>
+### 4.8. Elastic Load Balancer:
 Primero que nada, ¿qué es un Elastic Load Balancer(elb)?
 
 Un Load Balancer acepta tráfico de entrada de peticiones provinientes de clientes o routers hacia unos "targets" registrados en **AWS**, una instancia EC2 por ejemplo, y una vez que el "target" está funcionando correctamente y puede recibir peticiones, redirige esta petición a dicho "target".
@@ -548,8 +554,8 @@ La declaración de este recurso es la siguiente:
 
 <img src="imagenes/parte_3/punto8/terraform_elb_2.png">
 
-<a name="id3-9"></a>
-### 3.9. Security Groups
+<a name="id4-9"></a>
+### 4.9. Security Groups
 Este recurso sirve para añadir un security group en **AWS**, un security group es un grupo de reglas de entrada y salida en la cuales se especifica que puerto o rango de puertos quedan abiertos para determinadas ips.
 
 La declaración de este recurso es la siguiente:
@@ -587,8 +593,8 @@ Estamos permitiendo el tráfico de entrada al puerto 80 (from_port y to_port) de
 
 <img src="imagenes/parte_3/punto9/terraform_sg_egress.png" alt="reglas_output">
 
-<a name="id3-10"></a>
-### 3.10. Relational Data Base:
+<a name="id4-10"></a>
+### 4.10. Relational Data Base:
 
 Este recurso crea una instancia de base datos dentro de **AWS** que es llamda **RDB**.
 
@@ -648,8 +654,8 @@ El nombre del recurso que proporciona el RDB es ```aws_db_instance``` en **Terra
 
 <img src="imagenes/parte_3/punto10/terraform_rdb.png">
 
-<a name="id4"></a>
-## 4. Ejercicio final:
+<a name="id5"></a>
+## 5. Ejercicio final:
 
 Para este ejercicio final tendremos: 
 
@@ -659,15 +665,15 @@ Para este ejercicio final tendremos:
 
 * Y, por último, todos estos recursos y servicios estarán dentro de una **VPC**
   
-<a name="id5"></a>
-## 5. Conclusiones
+<a name="id6"></a>
+## 6. Conclusiones
 
 Con Terraform me he podido profundizar más en el mundo del despliegue y automatización de infraestructuras mediante código.
 
 Una de las buenas cosas de **Terraform** es que, a pesar de ser relativamente nuevo en el mercado, consta de mucha documentación tanto la que proporciona la misma empresa que se encarga del desarrollo [Hashicorp](https://www.terraform.io/docs/index.html) como la que hay por parte externa.
 
-<a name="id6"></a>
-## 6. Bibliografía
+<a name="id7"></a>
+## 7. Bibliografía
 
 https://github.com/hashicorp/terraform
 

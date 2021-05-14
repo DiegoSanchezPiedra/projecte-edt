@@ -2,14 +2,20 @@
 
 ## Índice
 
-1. [Instalación](#id1)  
-2. [AWS ami](#id2)  
-3. [Vagrant Box](#id3)  
-4. [Conclusiones](#id4)  
-5. [Bibliografia](#id5)  
+1. [Idea Principal](#id1)  
+2. [Instalación](#id2)  
+3. [AWS ami](#id3)  
+4. [Vagrant Box](#id4)  
+5. [Conclusiones](#id5)  
+6. [Bibliografia](#id6)  
 
 <a name="id1"></a>
-## 1. Instalación
+## 1. Idea Principal
+
+La idea principal de este documento es demostrar la instalación de Packer así como la creación de una imagen  customizada ami para **AWS** y un box customizado para **Vagrant**.
+
+<a name="id2"></a>
+## 2. Instalación
 
 La instalación es muy sencilla, solo hace falta añadir el repositorio y ya estaría listo para usar.
 
@@ -23,10 +29,14 @@ Tambíen podemos hacerlo descargando el binario:
 
 <img src="imagenes/install/packer_install_3.png">
 
-<a name="id2"></a>
-## 2. AWS ami
+<a name="id3"></a>
+## 3. AWS ami
 
-Esta ami customizada partirá de una ami base de *Ubuntu Server 20.04 LTS*, la cual tendrá apache2 y php instalado por medio del provisioner **"shell"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
+Esta ami customizada tendrá **apache2** y **php** instalados y configurados para que al momento de acceder al servidor apache nos muestre información de php.
+
+Esta instalación y configuración se harán por medio del provisioner **"shell"** y se la pasará el fichero *index.html* por medio del provisioner **"file"**.
+
+Esta ami customizada tendrá de base una ami del market de **AWS** que tiene de base un sistema operativo *Ubuntu Server 20.04 LTS*.
 
 **install.sh:**
 
@@ -96,13 +106,29 @@ phpinfo();
 
 *  **provisioners:**
    *  Usaremos dos tipos de provisioners:  
-      *  shell: Este provisioner nos permite ejecutar comandos de shell, en el cual le pasaremos un fichero .sh el cual contiene la instalación de apache2 y php además de una pequeña configuración.
-      *  file: Es el cual nos permite tranferir ficheros de la máquina host al host remoto donde se lanzará la instancia, en este caso en concreto le estamos pasando un fichero de nombre *"index.php"* que contiene una función que muestra información sobre el módulo php ```phpinfo()```.
+      *  <u>shell:</u> Este provisioner nos permite ejecutar comandos de shell, en el cual le pasaremos un fichero .sh el cual contiene la instalación de apache2 y php además de una pequeña configuración.
+      *  <u>file:</u> Es el cual nos permite tranferir ficheros de la máquina host al host remoto donde se lanzará la instancia, en este caso en concreto le estamos pasando un fichero de nombre *"index.php"* que contiene una función que muestra información sobre el módulo php ```phpinfo()```.
 
 ***Cabe resaltar que primero tranferimos el fichero index.php a /tmp/ ya que el provisioner file no cuenta con permisos de root ni está en el grupo de sudoers y por lo tanto no tiene persmiso de tranferir directamente el fichero a /var/www/html/. Entonces lo que hemos hecho es primero pasarlo a /tmp/ dónde todo el mundo tiene permisos tanto de escritura como de lectura y luego con comandos de shell lo copiamos a /var/www/html***
 
-<a name="id3"></a>
-## 3. Vagrant Box
+Una vez todos los ficheros están preparados queda hacer un ```packer build -var aws_profile=terraform``` donde al argumento **-var** le pasamos la variable **aws_profile** con el valor *terraform* que es el perfil que contiene las credenciales (**aws_access_key_id** y **aws_secret_access_key**) para poder acceder y gestionar los recursos de **AWS**.
+
+<img src="imagenes/aws_ami/packer_build_1.png">
+
+Podremos que comprobar en este ***output*** el proceso que hace **Packer** para poder crear la imagen customizada.
+
+Lo que hace es lanzar una instancia con la ami base especificada en el fichero ***imagen.json*** creando una key_pair y security group que permite el acceso por medio del puerto 22 (SSH) para que así **Packer** pueda hacer las instalaciones y configuraciones que hayamos especificado (en este caso la instalación y configuración de apache y php) por medio de los provisioners **shell** y **file**.
+
+<img src="imagenes/aws_ami/packer_build_2.png">
+
+Una vez hecho este proceso, si nos dirigimos a **AWS** y buscamos en el apartado de *AMIs* podremos ver que nuestra ami ha sido creada:
+
+<img src="imagenes/aws_ami/packer_build_3.png">
+
+Lo podemos comprobar fijandonos que la **ami ID** coincide con el output que ha mostrado **Packer** al momento de crear la imagen.
+
+<a name="id4"></a>
+## 4. Vagrant Box
 
 Este box customizado partirá de un box con una imagen de [ubuntu/xenial64](https://app.vagrantup.com/ubuntu/boxes/xenial64/versions/20210429.0.0) que tendrá instalados y configurados apache, php y ldap.
 
@@ -200,9 +226,11 @@ phpinfo();
 }
 ```
 
+Todos los ficheros necesarios para la configuración de **ldap** que está especificada en el fichero **install.sh** se encuentran en un directorio de nombre "ldap" que a su vez se encuentra en el mismo directorio donde está el fichero de **image.json** y que, por lo tanto, es de donde se hará el ```packer build```.
+
 Lo que hará **Packer** será lanzar un box base, en este cabo ubuntu/xenial64 que, concretamente, contiene la imagen ubuntu 16.04 LTS, y conectarse por ssh.
 
-Una ve lanzada empieza a hacer las configurciones de los diferentes **provisioners** que hayamos especificado, luego que se haya configurado e/o instalado todo correctamente crea la imagen y la empaqueta en un **box**.
+Una vez lanzada empieza a hacer las configurciones de los diferentes **provisioners** que hayamos especificado, luego que se haya configurado e/o instalado todo correctamente crea la imagen y la empaqueta en un **box**.
 
 Cuando haya acabado todo este proceso hace un ```vagrant destroy``` del box base.
 
@@ -215,9 +243,11 @@ Cuando haya acabado todo este proceso hace un ```vagrant destroy``` del box base
   * file: Nos permite tranferir elementos desde la máquina real al box creado temporalmente.
   * shell: Nos permite ejecutar comando de shell *"inline"* o como un fichero de *"script"* en el box lanzado temporalmente.
   
-Una vez tenemos todo configurado, hacemos ```packer build -force -debug image.json``` y nos empezará a crear el box.
+Una vez tenemos todo configurado, hacemos ```packer build image.json``` y nos empezará a crear el box.
 
 Una vez creado el box customizado tenemos que añadirlo a **Vagrant** con el comando ```vagrant box add output-vagrant/package.box --name diego/ubuntu``` siendo **output-vagrant/** el directorio donde se encuentra el box customizado.
+
+***El argumento ```--name``` es obligatorio cuando añadimos un box que no se encuentra en el cloud de Vagrant***
 
 Creamos un fichero **Vagrantfile** diciendole las configuraciones que necesitemos:
 
@@ -240,15 +270,15 @@ Hacemos un ```vagrant up``` y comprovamos que todo funciona correctamente:
 
 <img src="imagenes/vagrant/packer_ldap.png">
 
-<a name="id4"></a>
-## 4. Conclusiones
+<a name="id5"></a>
+## 5. Conclusiones
 
 Con packer he descubierto los dos tipos de infraestructura que son la mutable y la inmutable, de las cuales me he centrado en la infraestructura imnutable ya que es la solución que da **Packer** ante el problema explicado en la introducción.
 
 Y podemos usar esta ami customizada ,que ya cuenta con la instalación y configuración de apache y php, en AWS para desplegar la infraestructura y nos ahorramos tener que acudir a un aprovisionador para realizar esta instalación y configuración. También pasaría con **Vagrant** y la box customizada.
 
-<a name="id5"></a>
-## 5. Bibliografia
+<a name="id6"></a>
+## 6. Bibliografia
 
 https://www.packer.io/docs
 

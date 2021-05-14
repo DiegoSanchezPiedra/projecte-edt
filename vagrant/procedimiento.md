@@ -1,35 +1,41 @@
 # Procedimiento
 
 ## Índice  
-1. [Instalación](#id1)  
-   1.1. [Vagrant](#id1-1)  
-   1.2. [VirtualBox](#id1-2)  
-2. [Boxes](#id2)  
-   2.1. [Añadir un box](#id2-1)  
-   2.2. [Lanzar un box](#id2-2)  
-   2.3. [Directorio Sincronizado](#id2-3)  
-   2.4. [Reempaquetar un box](#id2-4)  
-   2.5. [Eliminiación e instalación de una imagen local](#id2-5)  
-   2.6. [Actualización de una imagen](#id2-6)  
-3. [Configuración Vagrantfile](#id3)  
-   3.1. [Configuración Simple](#id3-1)  
-   3.2. [Interfaz Gráfica](#id3-2)  
-   3.3. [Aprovisionamiento Ligero](#id3-3)  
-   3.4. [Redirección de puertos](#id3-4)  
-   3.5. [Configuración red privada](#id3-5)  
-   3.6. [Configuración red pública](#id3-6)  
-   3.7. [Multimáquinas](#id3-7)  
-4. [Ejercicio Final](#id4)
-5. [Conclusiones](#id5)  
-6. [Bibliografía](#id6)  
+1. [Idea Principal](#id1)  
+2. [Instalación](#id2)  
+   2.1. [Vagrant](#id2-1)  
+   2.2. [VirtualBox](#id2-2)  
+3. [Boxes](#id3)  
+   3.1. [Añadir un box](#id3-1)  
+   3.2. [Lanzar un box](#id3-2)  
+   3.3. [Directorio Sincronizado](#id3-3)  
+   3.4. [Reempaquetar un box](#id3-4)  
+   3.5. [Eliminiación e instalación de una imagen local](#id3-5)  
+   2.6. [Actualización de una imagen](#id3-6)  
+4. [Configuración Vagrantfile](#id4)  
+   4.1. [Configuración Simple](#id4-1)  
+   4.2. [Interfaz Gráfica](#id4-2)  
+   4.3. [Aprovisionamiento Ligero](#id4-3)  
+   4.4. [Redirección de puertos](#id4-4)  
+   4.5. [Configuración red privada](#id4-5)  
+   4.6. [Configuración red pública](#id4-6)  
+   4.7. [Multimáquinas](#id4-7)  
+5. [Ejercicio Final](#id5)  
+6. [Conclusiones](#id6)  
+7. [Bibliografía](#id7)  
 
 <a name="id1"></a>
-## 1. Instalación
+## 1. Idea Principal
+
+La idea de principal de este documento es hacer la instalación de **Vagrant**, seguidamente hacer una serie de ejemplos prácticos para finalmente hacer un ejercicio final donde se aplican los ejemplos explicados anteriormente.
+
+<a name="id2"></a>
+## 2. Instalación
 
 Como se ha comentado anteriormente, para usar **Vagrant** se necesita tener, al menos, un sistema de virtualización, en estos ejercicios se utilizará el sistema de vitualización inicial con el cual se desarrolló **Vagrant** que es [VirtualBox](https://www.virtualbox.org/) y que además es donde se ofrece más funcionalidad.
 
-<a name="id1-1"></a>
-### 1.1. Vagrant
+<a name="id2-1"></a>
+### 2.1. Vagrant
 
 La instalación de vagrant es muy secilla, en el caso de sistemas operativos como **Ubuntu**, **Debian**, **CentOS**, **Fedora**, **Amazon Linux** o **Homebrew** lo único que tenemos que hacer es:
 * Añadir el repositorio
@@ -41,8 +47,8 @@ $ sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/h
 $ sudo dnf -y install vagrant
 ```
 
-<a name="id1-2"></a>
-### 1.2. VirtualBox
+<a name="id2-2"></a>
+### 2.2. VirtualBox
 
 * Para la instalación de VirtualBox, tenemos que ir a la página web de [VirtualBox](https://www.virtualbox.org/wiki/Downloads), aquí encontraremos las diferentes opciones de descarga dependiendo del sistema operativo y la distribución.
 
@@ -66,15 +72,15 @@ Una vez hecha la instalación y los demás pasos tendremos que ejecutar el setup
 $ sudo /usr/lib/virtualbox/vboxdrv.sh setup
 ```
 
-<a name="id2"></a>
-## 2. Boxes
+<a name="id3"></a>
+## 3. Boxes
 
 El funcionamiento de **Vagrant** consiste en dividir la distribución de la aplicación en dos, el sistema operativo en un determinado formato, que viene a ser, entre otras cosas, la imagen de este, y por otra lado distribuimos la configuración y modificaciones de este escenario en un fichero de texto plano, que viene a ser **Vagrantfile**.
 
 Vagrant tiene su propia [comunidad](https://app.vagrantup.com/boxes/search) en la cual todo el mundo puede subir sus boxes y ahí es donde se pueden obtener los boxes o también podemos crear nuestro propio box con ayuda de otro software, por ejemplo **packer**.
 
-<a name="id2-1"></a>
-### 2.1. Añadir un box
+<a name="id3-1"></a>
+### 3.1. Añadir un box
 
 Para añadir un box, **Vagrant** nos proporciona el subcomando ***"box"*** que a su vez tiene más subcomandos y entre ellos encotramos ***"add"*** que es los que nos permite descargar el box que queramos:
 
@@ -91,8 +97,8 @@ Ejemplo:
 
 ***Hay que tener en cuenta que los boxes que se suben a la comunidad de Vagrant no están verificados, por lo tanto es necesario que tengamos cuidado al momento de qué box descargar***
 
-<a name="id2-2"></a>  
-### 2.2. Lanzar un box
+<a name="id3-2"></a>  
+### 3.2. Lanzar un box
 
 Para el arranque de un box que hayamos descargado anteriormente tenemos que usar el subcomando ***"init"*** dentro del subcomando de ***"box"***, esto lo que hará es crear un fichero **Vagrantfile** en el cual se encuentra la configuración base para poder, posteriormentem, arrancar nuestro box con ```vagrant up```, por lo tanto, tenemos que tener en cuenta que el uso de este fichero de configuración que nos permite arrancar el box tiene que estar alojado en un directorio y en este directorio no pueden ir otros ficheros de configuración **Vagrantfile**.
 
@@ -125,8 +131,8 @@ En caso de que ya no necesitemos este escenario, lo que podemos hacer es ```vagr
 
 <img src="imagenes/parte_2/vagrant_destroy.png">  
 
-<a name="id2-3"></a>  
-### 2.3. Directorio Compartido
+<a name="id3-3"></a>  
+### 3.3. Directorio Compartido
 
 La gran mayoría de los boxes de **Vagrant** suelen crearse con un directorio compartido, es decir, un directorio que está sincronizado entre la máquina anfitriona y la máquina virtual, este directorio se suele encontrar en la ruta ```/vagrant``` de las máquinas virtuales y en el directorio dónde se encuentra el **Vagrantfile** en caso de la máquina anfitriona.
 
@@ -138,8 +144,8 @@ Al momento de compartir los archivos, **Vagrant** lo que hace es mappear el usua
 
 <img src="imagenes/parte_2/shared_dir_2.png">
 
-<a name="id2-4"></a>
-### 2.4. Reempaquetar un box
+<a name="id3-4"></a>
+### 3.4. Reempaquetar un box
 
 Al momento de descargar un box, **Vagrant** lo que en verdad hace es, en cuanto descarga el .box, lo descomprime y lo guarda en ~/.vagrant.d/boxes ya descomprimido que contiene:
 * Un fichero .ovf que es de información
@@ -155,15 +161,15 @@ Vagrant tiene una opción llamada **repackage** que lo que hace es, a partir de 
 
 Como podemos ver, para poder hacer el repackage necesitamos el nombre del box, el proveedor que utiliza y la versión que tiene.
 
-<a name="id2-5"></a>
-### 2.5. Eliminiación e instalación de una imagen local
+<a name="id3-5"></a>
+### 3.5. Eliminiación e instalación de una imagen local
 
 En caso de que tengamos una imagen propia en local y queremos que **Vagrant** use esta en vez de alguna que esté en [Vagrant Cloud](https://app.vagrantup.com/boxes/search) lo que podemos hacer es indicarle el .box que queremos que use y especificarle un nombre:
 
 <img src="imagenes/parte_2/vagrant_local_install.png">  
 
-<a name="id2-6"></a>
-### 2.6. Actualización de una imagen
+<a name="id3-6"></a>
+### 3.6. Actualización de una imagen
 
 **Vagrant** a través de [Vagrant Cloud](https://app.vagrantup.com/boxes/search) nos proporciona boxes los cuales con el tiempo se van actualizando.
 
@@ -185,12 +191,12 @@ Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant ini
 
 <img src="imagenes/parte_2/vagrant_box_prune.png">
 
-<a name="id3"></a>
+<a name="id4"></a>
 ## 3. Configuración Vagrantfile
 
 
-<a name="id3-1"></a>
-### 3.1. Configuración Simple
+<a name="id4-1"></a>
+### 4.1. Configuración Simple
 
 Hasta ahora solo hemos usado el **Vagrantfile** para indicarle qué box tiene que levantar, pero tenemos muchas más opciones como por ejemplo indicarle un nombre de hostname, la memória que puede usar, los cpus que puede usar, etc que suelen ser los primeros pasos al crear una máquina virtual.
 
@@ -217,8 +223,8 @@ Al momento de hacer ```vagrant up``` podemos ver que se han realizado los cambio
 
 ***En caso de hacer otros cambios más especificos se puede usar el comando ```vagrant reload``` para no tener que hacer un ```vagrant destroy``` y un ```vagrant up``` cada vez que queramos aplicar los cambios que hayamos hecho en el Vagrantfile.***
 
-<a name="id3-2"></a>
-### 3.2. Interfaz Gráfica
+<a name="id4-2"></a>
+### 4.2. Interfaz Gráfica
 
 **Vagrant** también nos da la posibilidad de usar una interfaz gráfica que puede ser muy útil en algunos casos, por ejemplo, supongamos que estamos haciendo configuraciones con ssh y hacemos algo mal que no nos deja conectarnos por ssh a la máquina virtual, entonces no tenemos otra forma de conectarnos, aquí es cuando entra la interfaz gráfica que, siempre que tengamos al menos un usuario creado, podemos entrar sin problema.
 
@@ -243,8 +249,8 @@ y al hacer un ```vagrant up``` nos abre la interfaz gráfica:
 
 ***Esto funcionará siempre y cuando el proveedor que se esté utilizando soporte la interfaz gráfica***
 
-<a name="id3-3"></a>
-### 3.3. Aprovisionamiento Ligero
+<a name="id4-3"></a>
+### 4.3. Aprovisionamiento Ligero
 
 Imaginemos que tenemos 10 máquinas lanzadas y todas usan la misma imagen, lo que pasará es que por cada máquina creada habrá una imagen ocupando espacio en disco real del host anfitrión.
 
@@ -274,8 +280,8 @@ Al inspeccionar lo que se crea al arrancar la máquina podemos ver que en lugar 
 
 <img src="imagenes/parte_3/punto3/vagrant_tp_2.png">
 
-<a name="id3-4"></a>
-### 3.4. Redirección de puertos
+<a name="id4-4"></a>
+### 4.4. Redirección de puertos
 
 Vagrant por defecto ya hace redireccionamiento: 
 
@@ -315,8 +321,8 @@ Un comando muy útil para saber que puertos han sido redireccionados es: ```vagr
 
 <img src="imagenes/parte_3/punto4/vagrant_port.png">
 
-<a name="id3-5"></a>
-### 3.5. Configuración red privada
+<a name="id4-5"></a>
+### 4.5. Configuración red privada
 
 En este apartado vamos a añadir una red privada, a parte de la red que **Vagrant** utiliza por defecto para todas la máquinas, la cual va a estar conectada a la red privada donde se encuentra la máquina anfitriona y por lo tanto también podrán tener conexión la máquina anfitriona con la máquina virtual.
 
@@ -338,8 +344,8 @@ Aquí podemos comprovar como **Vagrant**, a parte de la red por defecto que perm
 
 Y al acceder a la máquina con ```vagrant ssh``` y hacer un ```ip a``` podemos comprobar que ahora tiene 3 interfaces: la de loopback, la que permite acceder al exterior por medio de NAT y la que está en el entorno privado.
 
-<a name="id3-6"></a>
-### 3.6. Configuiración red pública
+<a name="id4-6"></a>
+### 4.6. Configuiración red pública
 
 La configuración de una red pública es bastante parecida a la privada, lo que cambia es que ahora le especificamos que tiene que hacer una conexión de modo ***bridge***.
 
@@ -366,8 +372,8 @@ Podemos ver que ahora se ha añadido otra interficie, pero está vez en modo *"p
 
 También podemos ver en esta imagen que tenemos una ip que nos ha proporcionado el servidor DHCP del router.
 
-<a name="id3-7"></a>
-### 3.7. Multimáquinas
+<a name="id4-7"></a>
+### 4.7. Multimáquinas
 
 El uso de multimáquinas puede ser muy útil para algunos casos, por ejemplo para hacer una simulación de un entorno de producción que contiene múltiple máquinas.
 
@@ -395,8 +401,8 @@ Hemos hecho la simulación de que tenemos dos servidores, uno es el servidor web
 
 <img src="imagenes/parte_3/punto7/vagrant_define_2.png">
 
-<a name="id4"></a>
-## 4. Ejercicio Final
+<a name="id5"></a>
+## 5. Ejercicio Final
 
 Para este ejercicio final vamos a levantar una máquina con las siguientes caraterísticas:
 
@@ -410,15 +416,15 @@ Para este ejercicio final vamos a levantar una máquina con las siguientes carat
 
 Este entorno está preparado para hacer pruebas en apache2, que a su vez cuenta con módulos de php, y también para hacer test en ldap.
 
-<a name="id5"></a>
-## 5. Conclusiones
+<a name="id6"></a>
+## 6. Conclusiones
 
 Con **Vagrant** me he encontrado que es muy fácil de utilizar si se tiene un conocimiento básico de la programación ya que usa el lenguje **Ruby** que es de alto nivel y muy fácil de entender.
 
 También me ha sido de mucha ayuda para hacer las pruebas para los otros temas lanzando máquinas virtuales con diferentes sistemas operativos e instalando y configurando software en estas para poder asegurarme que todo vaya bien antes de hacer el despliegue.
 
-<a name="id6"></a>
-## 6. Bibliografía
+<a name="id7"></a>
+## 7. Bibliografía
 
 https://www.vagrantup.com/docs 
 
