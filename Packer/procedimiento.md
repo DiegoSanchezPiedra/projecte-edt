@@ -96,8 +96,8 @@ phpinfo();
 ```
 * **Builders:**
   
-  * Primero le indicamos que **Builder** queremos usar, en este caso el de **AWS** concretamente para crear amis para instancias EC2.
-  * El profile se lo pasaremos como argumento por tal de aprovechar el CLI de AWS donde tenemos alamcenados nuestras **acces key** y **secret key**.
+  * Primero le indicamos qué **Builder** queremos usar, en este caso el de **AWS** concretamente para crear amis para instancias EC2.
+  * El profile se lo pasaremos como argumento por tal de aprovechar el CLI de AWS donde tenemos almacenados nuestras **acces key** y **secret key**.
   * Le indicamos también la región donde usareme **AWS**.
   * El nombre que tendrá la ami que crearemos.
   * Es necesario que le indiquemos una **source_ami** ya que lo que hará **Packer** será copiar una ami base de referencia y en esta copia aplicar los cambios que hayamos especifado.

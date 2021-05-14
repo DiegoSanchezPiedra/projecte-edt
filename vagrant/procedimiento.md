@@ -192,7 +192,7 @@ Para actualizar un box lo que tenemos que hacer es crear hacer un ```vagrant ini
 <img src="imagenes/parte_2/vagrant_box_prune.png">
 
 <a name="id4"></a>
-## 3. Configuración Vagrantfile
+## 4. Configuración Vagrantfile
 
 
 <a name="id4-1"></a>

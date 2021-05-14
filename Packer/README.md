@@ -45,7 +45,7 @@ El problema viene cuando tenemos muchos servidores que desplegar, entonces tendr
 
 Para este problema la solución que la mayoría de personas acude es usar Herramientas de la configuración como **Ansible** que se hará cargo de que todos los servidores que han sido desplegados tengas la configuración necesaria. 
 
-Una de las soluciones, que es muy utilizado, es el uso de **Herramientas de la configuración** que se encargarán de hacer llegar las configuraciones e instalciones a cada servidor.
+Una de las soluciones, que es muy utilizada, es el uso de **Herramientas de la configuración** que se encargarán de hacer llegar las configuraciones e instalciones a cada servidor.
 
 Una de estas herramientas es [Ansible](https://www.ansible.com/)
 
@@ -67,14 +67,14 @@ Bien pues aquí es cuando la herramienta **Packer** tiene importancia ya que pod
 
 Por lo tanto nuestra imagen ya tiene todo el código de la aplicación y todas la configuraciones necesarias y solo quedaría desplegar y estaría lista para funcionar. 
 
-En caso de tengamos que añadir, cambiar el código de nuestra aplicación, cambiar o añadir configuraciones lo único que tendrímos que hacer es crear otra imagen custumoizada a partir de la anterior con todos lo cambiamos hecho, eliminar el despliegue del servidor con la imagen antigua y volver a lanzar el servidor de nuevo pero con la imagen nueva.
+En caso de tengamos que añadir, cambiar el código de nuestra aplicación, cambiar o añadir configuraciones lo único que tendríamos que hacer es crear otra imagen customizada a partir de la anterior con todos lo cambiamos hechos, eliminar el despliegue del servidor con la imagen antigua y volver a lanzar el servidor de nuevo pero con la imagen nueva.
 
 <img src="imagenes/inmutable_infraestructure_3.png" width="50%">
 
 <a name="id3"></a>
 ## 3. Builders
 
-La función de los **builders** es crear una máquina y generar una imagen para la plataforma que el builder pertenezca, por ejemplo **AWS** con las ***instances*** y **Vagrant** con las ***boxes***.
+La función de los **builders** es crear una máquina y generar una imagen para la plataforma que el builder pertenezca, por ejemplo **AWS** con las ***amis*** y **Vagrant** con las ***boxes***.
 
 <img src="imagenes/aws_ami.png" width="30%">
 
@@ -83,7 +83,7 @@ La función de los **builders** es crear una máquina y generar una imagen para 
 <a name="id4"></a>
 ## 4. Provisioners
 
-Es donde podemos confiugrar e instalar nuestra imagen, por ejemplo instalar paquetes, crear usuarios, hacer la configuraciones necesarias, etc.
+Es donde podemos configurar e instalar nuestra imagen, por ejemplo instalar paquetes, crear usuarios, hacer la configuraciones necesarias, etc.
 
 Packer cuenta con una gran cantidad de aprovisionadores, como por ejemplo [shell](https://www.gnu.org/software/bash/), [chef](https://www.chef.io/solutions/configuration-management), [puppet](https://puppet.com/use-cases/continuous-configuration-automation/), [ansible](https://www.ansible.com/use-cases/configuration-management), etc.
 
