@@ -1,0 +1,31 @@
+vagrant:
+
+vagrant up
+
+ldapsearch -x -LLL -H ldap://192.68.33.10 -b "dc=edt,dc=org" -s base
+
+en el navegador poner: 192.68.33.10
+
+terraform:
+
+terraform init --auto-approve
+
+psql -h mydb.cp8yktnnyp49.eu-west-3.rds.amazonaws.com -d testdb -U root -W
+
+create table prueba (identificador int, descripcion text);
+
+packer:
+  Vagrant:
+	  packer build image.json 
+	  vagrant box add output-... --name diego/ubuntu
+	  vagrant up FICHERO VAGRANTFILE YA CREADO
+	  
+	  ldapsearch -x -LLL -H ldap://192.168.50.4 -b "dc=edt,dc=org" -s base
+	  
+	  ldapsearch -x -LLL -H ldap://localhost:8389 -b "dc=edt,dc=org" -s base
+  
+  terraform:
+	  packer build -var aws_profile=terraform imagen.json
+	  terraform apply (con la ID ami puesta)
+	  
+	  probar la conexion con web server

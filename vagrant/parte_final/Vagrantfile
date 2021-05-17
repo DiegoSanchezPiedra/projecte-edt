@@ -9,13 +9,11 @@ Vagrant.configure("2") do |config|
   end
   
   #network settings
-  #config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "private_network", ip: "192.68.33.10"
   
   #folder settings 
   config.vm.synced_folder "./html/", "/var/www/html", :mount_options => ["dmode=777","fmode=666"]
   
   #provision settings
-  #config.vm.provision "file", source: "ldap", destination: "/vagrant"
   config.vm.provision "shell", path: "install.sh"
 end

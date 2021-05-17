@@ -1,6 +1,6 @@
 resource "aws_launch_configuration" "web-server" {
   name_prefix = "web-server-"
-  image_id = "ami-029e5211d05d9177b"
+  image_id = "ami-07927f603626a6717"
   instance_type = "${var.instance_type}"
   key_name = "terraform-key"
   security_groups = ["${aws_security_group.web-sg.id}"]
